@@ -1,9 +1,6 @@
 # AISuspendedBallChat
 AI智能助理前端组件,聊天助手前端组件,AI组件
 
-
-# AI Suspended Ball Chat
-
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
 ![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
 
