@@ -9,6 +9,8 @@ AI智能助理前端组件,聊天助手前端组件,AI组件
 
 **《组件落地场景体验-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/#/resume)
 
+**《npm官网地址》**: [https://www.npmjs.com/package/ai-suspended-ball-chat](https://www.npmjs.com/package/ai-suspended-ball-chat)
+
 ## ✨ 特性
 
 - 🤖 **AI对话**: 支持与AI进行自然语言对话
