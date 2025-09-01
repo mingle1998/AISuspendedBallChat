@@ -1,12 +1,11 @@
 # AISuspendedBallChat
 AI智能助理前端组件,聊天助手前端组件,AI组件
 
+
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
 ![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
 
 **《组件落地场景体验-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/#/resume)
-
-**《npm官网地址》**: [https://www.npmjs.com/package/ai-suspended-ball-chat](https://www.npmjs.com/package/ai-suspended-ball-chat)
 
 ## ✨ 特性
 
@@ -381,6 +380,106 @@ const assistantConfig = {
 | `isStreaming` | - | `boolean` | 检查是否正在流式响应 |
 | `scrollToBottom` | - | - | 滚动到底部 |
 
+## 🔌 后端接口返回数据格式
+
+### 流式响应格式（Server-Sent Events）
+
+**响应头设置：**
+```
+Content-Type: text/event-stream
+Cache-Control: no-cache
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+```
+
+**数据格式：**
+每行返回一个JSON对象，以`\n\n`分隔
+
+```json
+{"code": 0, "result": "Vue.js是一个用于构建", "is_end": false}
+{"code": 0, "result": "用户界面的渐进式", "is_end": false}
+{"code": 0, "result": "JavaScript框架。", "is_end": false}
+{"code": 0, "result": "", "is_end": true}
+```
+
+**字段说明：**
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `code` | `number` | 状态码，0表示成功 |
+| `result` | `string` | 返回的文本内容片段 |
+| `is_end` | `boolean` | 是否为最后一个数据块 |
+
+**完整流式响应示例：**
+```javascript
+// 流式响应数据示例
+[
+  {"code": 0, "result": "# Vue.js特点介绍\n\n", "is_end": false},
+  {"code": 0, "result": "## 1. 渐进式框架\n", "is_end": false},
+  {"code": 0, "result": "Vue.js采用渐进式设计，", "is_end": false},
+  {"code": 0, "result": "可以逐步集成到现有项目中。\n\n", "is_end": false},
+  {"code": 0, "result": "## 2. 响应式数据绑定\n", "is_end": false},
+  {"code": 0, "result": "数据变化时自动更新DOM，", "is_end": false},
+  {"code": 0, "result": "无需手动操作。\n\n", "is_end": false},
+  {"code": 0, "result": "```javascript\n", "is_end": false},
+  {"code": 0, "result": "// Vue响应式示例\n", "is_end": false},
+  {"code": 0, "result": "data() {\n  return {\n", "is_end": false},
+  {"code": 0, "result": "    message: 'Hello Vue!'\n", "is_end": false},
+  {"code": 0, "result": "  }\n}\n```\n\n", "is_end": false},
+  {"code": 0, "result": "以上就是Vue.js的主要特点。", "is_end": false},
+  {"code": 0, "result": "", "is_end": true}
+]
+```
+
+### 普通响应格式（JSON）
+
+**成功响应：**
+```json
+{
+  "code": 0,
+  "result": {
+    "answer": "Vue.js是一个用于构建用户界面的渐进式JavaScript框架。它具有以下特点：\n\n1. **渐进式框架**：可以逐步采用\n2. **响应式数据绑定**：数据变化自动更新视图\n3. **组件化开发**：提高代码复用性\n4. **虚拟DOM**：提升性能\n5. **易学易用**：学习成本低"
+  }
+}
+```
+
+### 错误响应格式
+
+**错误响应统一格式：**
+```json
+{
+  "code": 1,
+  "message": "错误描述",
+  "error": "详细错误信息"
+}
+```
+
+**常见错误码：**
+| 错误码 | 说明 |
+|--------|------|
+| `0` | 成功 |
+| `1` | 参数错误 |
+| `2` | 认证失败 |
+| `3` | 服务限流 |
+| `4` | 服务异常 |
+| `5` | 上下文过长 |
+
+**错误响应示例：**
+```json
+{
+  "code": 1,
+  "message": "参数错误",
+  "error": "query参数不能为空"
+}
+```
+
+```json
+{
+  "code": 4,
+  "message": "服务异常",
+  "error": "AI服务暂时不可用，请稍后重试"
+}
+```
+
 ## 🎨 样式自定义
 
 ### 自定义主题
@@ -564,21 +663,6 @@ interface AssistantConfig {
 }
 ```
 
-## 📄 许可证
-
-MIT License
-
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request！
-
-## 📞 支持
-
-如果您在使用过程中遇到问题，请：
-
-1. 查看[常见问题](#常见问题)部分
-2. 搜索已有的[Issues](../../issues)
-3. 创建新的[Issue](../../issues/new)
 
 ## ❓ 常见问题
 
@@ -669,3 +753,185 @@ A: 请检查以下几点：
 
 A: 目前语音输入默认使用中文简体（zh-CN），如需其他语言支持，请提交Issue或PR。
 
+###  Q: 如何在小助理消息中支持解析mermaid语法
+
+A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:https://cdn.jsdelivr.net/npm/mermaid@11.10.1/dist/mermaid.min.js
+
+
+
+
+### 📦 包体积优化建议
+
+由于本组件支持代码高亮、数学公式等诸多功能，包体积较大。在业务场景使用建议按需加载：
+
+#### 1. 动态导入（推荐）
+
+```javascript
+// 在需要时才加载组件
+const loadChatComponent = async () => {
+  const { SuspendedBallChat } = await import('ai-suspended-ball-chat')
+  return SuspendedBallChat
+}
+
+// 在Vue组件中使用
+export default {
+  components: {
+    SuspendedBallChat: () => import('ai-suspended-ball-chat').then(m => m.SuspendedBallChat)
+  }
+}
+```
+
+#### 2. 路由懒加载
+
+```javascript
+// router.js
+const routes = [
+  {
+    path: '/chat',
+    component: () => import('ai-suspended-ball-chat').then(m => m.SuspendedBallChat)
+  }
+]
+```
+
+#### 3. 条件渲染
+
+```vue
+<template>
+  <div>
+    <button @click="showChat = true">打开AI助手</button>
+    <SuspendedBallChat
+      v-if="showChat"
+      :url="apiUrl"
+      :app-name="appName"
+      :domain-name="domainName"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      showChat: false
+    }
+  },
+  components: {
+    SuspendedBallChat: () => import('ai-suspended-ball-chat').then(m => m.SuspendedBallChat)
+  }
+}
+</script>
+```
+
+#### 4. 使用Suspense（Vue 3）
+
+```vue
+<template>
+  <Suspense>
+    <template #default>
+      <SuspendedBallChat
+        :url="apiUrl"
+        :app-name="appName"
+        :domain-name="domainName"
+      />
+    </template>
+    <template #fallback>
+      <div>加载中...</div>
+    </template>
+  </Suspense>
+</template>
+
+<script setup>
+import { SuspendedBallChat } from 'ai-suspended-ball-chat'
+</script>
+```
+
+#### 5. 按需导入特定功能
+
+```javascript
+// 如果只需要聊天面板，可以只导入ChatPanel
+import { ChatPanel } from 'ai-suspended-ball-chat'
+
+// 或者按需导入工具函数
+import { createChatInstance } from 'ai-suspended-ball-chat'
+```
+
+#### 6. 组件按需加载（Vue 2/3通用）
+
+```vue
+<template>
+  <div>
+    <button @click="loadChat">加载AI助手</button>
+    <component :is="chatComponent" v-if="chatComponent" />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      chatComponent: null
+    }
+  },
+  methods: {
+    async loadChat() {
+      if (!this.chatComponent) {
+        const { SuspendedBallChat } = await import('ai-suspended-ball-chat')
+        this.chatComponent = SuspendedBallChat
+      }
+    }
+  }
+}
+</script>
+```
+
+#### 7. 组合式API按需加载（Vue 3）
+
+```vue
+<template>
+  <div>
+    <button @click="loadChat">加载AI助手</button>
+    <component :is="chatComponent" v-if="chatComponent" />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const chatComponent = ref(null)
+
+const loadChat = async () => {
+  if (!chatComponent.value) {
+    const { SuspendedBallChat } = await import('ai-suspended-ball-chat')
+    chatComponent.value = SuspendedBallChat
+  }
+}
+</script>
+```
+
+#### 8. 工厂函数模式
+
+```javascript
+// chatFactory.js
+export const createChatComponent = async (type = 'SuspendedBallChat') => {
+  const { [type]: Component } = await import('ai-suspended-ball-chat')
+  return Component
+}
+
+// 在组件中使用
+export default {
+  components: {
+    SuspendedBallChat: () => createChatComponent('SuspendedBallChat'),
+    ChatPanel: () => createChatComponent('ChatPanel')
+  }
+}
+```
+
+**优化效果：**
+- 初始包体积减少 60-80%
+- 首屏加载速度提升
+- 按需加载，提升用户体验
+- 支持多种Vue版本和写法
+
+## 📄 许可证
+
+MIT License
