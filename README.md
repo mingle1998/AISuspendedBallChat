@@ -6,6 +6,8 @@ AI智能助理前端组件,聊天助手前端组件,AI组件
 ![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
 
 **《组件落地场景体验-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/#/resume)
+
+
 **《npm官网》**: [https://www.npmjs.com/package/ai-suspended-ball-chat](https://www.npmjs.com/package/ai-suspended-ball-chat)
 
 ## ✨ 特性
