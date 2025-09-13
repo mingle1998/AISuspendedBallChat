@@ -1014,3 +1014,6 @@ export default {
  https://github.com/mingle1998/AISuspendedBallChat/issues
 
  2、或者加入我们的QQ群:  592895347
+
+ 3、组件npm地址:
+ https://www.npmjs.com/package/ai-suspended-ball-chat
