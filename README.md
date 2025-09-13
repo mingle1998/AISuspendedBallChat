@@ -1,14 +1,9 @@
-# AISuspendedBallChat
-AI智能助理前端组件,聊天助手前端组件,AI组件
-
+# AI Suspended Ball Chat
 
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
 ![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
 
-**《组件落地场景体验-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/#/resume)
-
-
-**《npm官网》**: [https://www.npmjs.com/package/ai-suspended-ball-chat](https://www.npmjs.com/package/ai-suspended-ball-chat)
+**《组件落地场景体验-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=12345678#/resume)
 
 ## ✨ 特性
 
@@ -17,9 +12,11 @@ AI智能助理前端组件,聊天助手前端组件,AI组件
 - 🖼️ **图片上传**: 支持图片上传和AI图像识别
 - 🎤 **语音输入**: 支持语音转文字输入，便捷的语音交互
 - 🔊 **语音播报**: 支持AI回复内容的语音播报
+- 📝 **获取AI消息**: 支持将AI内容插入到用户的编辑器或其他应用
 - 💾 **历史记录**: 本地存储对话历史，支持历史记录管理
-- 🎨 **自定义样式**: 支持自定义主题和样式
-- 📱 **响应式设计**: 适配各种屏幕尺寸
+- 🎨 **主题切换**: 支持白天/夜间模式切换
+- 🔗 **引用内容**: 支持选择引用页面中(上传)的文本作为上下文
+- 📱 **自定义接口**: 支持用户自定义后端接口
 - 🔧 **高度可配置**: 丰富的配置选项和回调函数
 - 🚀 **TypeScript支持**: 完整的TypeScript类型定义
 
@@ -315,12 +312,15 @@ const assistantConfig = {
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `20` | 最大历史记录数量 |
-| `enable-image-upload` | `boolean` | `true` | 是否启用图片上传 |
+| `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
+| `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
+| `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
 | `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
+| `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -339,12 +339,15 @@ const assistantConfig = {
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `20` | 最大历史记录数量 |
-| `enable-image-upload` | `boolean` | `true` | 是否启用图片上传 |
+| `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
+| `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
+| `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
 | `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
+| `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -383,7 +386,7 @@ const assistantConfig = {
 | `isStreaming` | - | `boolean` | 检查是否正在流式响应 |
 | `scrollToBottom` | - | - | 滚动到底部 |
 
-## 🔌 后端接口返回数据格式
+## 🔌 自定义后端接口需要返回数据格式
 
 ### 流式响应格式（Server-Sent Events）
 
@@ -483,6 +486,39 @@ Access-Control-Allow-Origin: *
 }
 ```
 
+## 🔌 使用官方提供的AI接口
+
+**如果你不希望自己去实现这个接口,您也可以选择官方提供的API接口**
+
+接口文档:[https://luckycola.com.cn/public/docs/shares/sdk/ai-assistant.html](https://luckycola.com.cn/public/docs/shares/sdk/ai-assistant.html)
+
+```js
+<SuspendedBallChat
+  :app-name="appName"
+  :domain-name="domainName"
+  :enable-streaming="true"
+  :enable-context="true"
+  :enable-local-storage="true"
+  :callbacks="callbacks",
+  url="https://luckycola.com.cn/aiTools/openAiAssistant"
+  :custom-request-config="{
+    headers: {
+      'X-Custom-Header': 'custom-value',
+    },
+    customParams: {
+      // 自定义的系统提示词
+      systemPrompt: '你是一位精通各种编程语言的高级工程师,可以帮我用户解答各种编程问题.',
+      // 官网(luckycola.com.cn)[用户中心]获取的AppKey
+      appKey: '643d*********a'
+    },
+    requestParamProcessor: (baseParams, customParams) => {
+      // ...
+    }
+    // ...组件其他详细配置请查看组件文档:https://www.npmjs.com/package/ai-suspended-ball-chat
+/>
+```
+
+
 ## 🎨 样式自定义
 
 ### 自定义主题
@@ -554,6 +590,14 @@ const welcomeConfig = {
 }
 ```
 
+### 否启用页面内容(文件内容)选择引用功能
+
+```javascript
+<SuspendedBallChat
+  :supported-custom-context="true"
+/>
+```
+
 ### AI助手配置
 
 ```javascript
@@ -584,6 +628,30 @@ const presetTasks = [
     description: '提供技术问题和编程帮助'
   }
 ]
+```
+
+### 消息插入功能使用示例
+
+新增的"获取AI消息"功能允许用户将AI回复的内容直接插入到其他应用或编辑器中，这在代码编辑器、文档编辑等场景中非常有用。
+
+**启用插入功能：**
+
+```javascript
+<SuspendedBallChat
+  :enable-insert-message="true"
+  :callbacks="callbacks"
+/>
+```
+
+**注意：** `enable-insert-message` 默认为 `false`，需要显式设置为 `true` 才能显示插入按钮。
+
+```javascript
+// 示例：将AI回复插入到代码编辑器
+const callbacks = {
+  clickAssistantMsgCallback: (message, index, messageObj) => {
+    console.log('AI回复消息:', message, index, messageObj);
+  }
+}
 ```
 
 ### 回调函数配置
@@ -628,6 +696,11 @@ const callbacks = {
   // 历史记录保存时触发
   onHistorySave: (history) => {
     console.log('保存历史记录:', history)
+  },
+  
+  // 点击AI助理消息"插入含义"按钮时触发
+  clickAssistantMsgCallback: (message, index, messageObj) => {
+    console.log('插入含义:', { message, index, messageObj })
   }
 }
 ```
@@ -754,7 +827,7 @@ A: 请检查以下几点：
 
 ### Q: 如何自定义语音输入的语言？
 
-A: 目前语音输入默认使用中文简体（zh-CN），如需其他语言支持，请提交Issue或PR。
+A: 目前语音输入默认使用中文简体（zh-CN），如需其他语言支持.
 
 ###  Q: 如何在小助理消息中支持解析mermaid语法
 
@@ -935,6 +1008,9 @@ export default {
 - 按需加载，提升用户体验
 - 支持多种Vue版本和写法
 
-## 📄 许可证
+## 📄 问题与交流
 
-MIT License
+ 1、问题建议可提交issue:
+ https://github.com/mingle1998/AISuspendedBallChat/issues
+
+ 2、或者加入我们的QQ群:  592895347
