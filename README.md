@@ -3,9 +3,9 @@
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
 ![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
 
-**《组件落地场景体验1-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=12345678#/resume)
+**《组件落地场景体验1-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
 
-**《组件落地场景体验2-AI编程助手》**: [https://luckycola.com.cn/public/dist/onlineCodeEditor.html#/editor](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=12345678#/editor)
+**《组件落地场景体验2-AI编程助手》**: [https://luckycola.com.cn/public/dist/onlineCodeEditor.html#/editor](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=123456789#/editor)
 
 ---
 
@@ -308,6 +308,8 @@ const assistantConfig = {
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
 | `app-name` | `string` | `'ai-chat'` | 应用名称 |
 | `domain-name` | `string` | `'user'` | 用户域名 |
+| `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
+| `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | 悬浮球大小 |
 | `location` | `'left-top' \| 'left-center' \| 'left-bottom' \| 'right-top' \| 'right-center' \| 'right-bottom'` | `'right-center'` | 悬浮球位置 |
 | `custom-icon-url` | `string` | - | 自定义悬浮球图标URL |
@@ -338,6 +340,8 @@ const assistantConfig = {
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
 | `app-name` | `string` | `'ai-chat'` | 应用名称 |
 | `domain-name` | `string` | `'user'` | 用户域名 |
+| `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
+| `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
@@ -503,7 +507,7 @@ Access-Control-Allow-Origin: *
   :enable-streaming="true"
   :enable-context="true"
   :enable-local-storage="true"
-  :callbacks="callbacks",
+  :callbacks="callbacks"
   url="https://luckycola.com.cn/aiTools/openAiAssistant"
   :custom-request-config="{
     headers: {
@@ -812,6 +816,32 @@ A: 通过`enable-voice-input`属性控制语音输入功能：
 
 <!-- 禁用语音输入 -->
 <SuspendedBallChat :enable-voice-input="false" />
+```
+
+### Q: 如何限制登录后才能使用?
+
+A: 可以通过`disable-input`配合`custom-placeholder`属性来实现：
+
+原理逻辑是: 如果用户未登录就禁用输入框并通过输入框的placeholder提示“登录后可发送消息”
+
+```vue
+<template>
+  <div id="app">
+    <SuspendedBallChat
+      :disable-input="!isLogin"
+      :custom-placeholder="isLogin ? '请输入你的消息' : '登录后可发送消息'"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { SuspendedBallChat } from 'ai-suspended-ball-chat'
+
+const isLogin = ref(false)
+const apiUrl = 'https://your-api-endpoint.com/chat'
+const appName = 'my-app'
+const domainName = 'user123'
 ```
 
 ### Q: 语音输入不工作怎么办？
