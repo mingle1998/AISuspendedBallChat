@@ -23,6 +23,7 @@
 - 📱 **自定义接口**: 支持用户自定义后端接口
 - 🔧 **高度可配置**: 丰富的配置选项和回调函数
 - 🚀 **TypeScript支持**: 完整的TypeScript类型定义
+- ☎️ **问题工单搜集**: 支持搜集需人工处理的问题
 
 ## 📦 安装
 
@@ -310,9 +311,10 @@ const assistantConfig = {
 | `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
 | `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
-| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | 悬浮球大小 |
+| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | 聊天面板大小 |
 | `location` | `'left-top' \| 'left-center' \| 'left-bottom' \| 'right-top' \| 'right-center' \| 'right-bottom'` | `'right-center'` | 悬浮球位置 |
 | `custom-icon-url` | `string` | - | 自定义悬浮球图标URL |
+| `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
@@ -327,6 +329,7 @@ const assistantConfig = {
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
 | `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
+| `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -341,7 +344,8 @@ const assistantConfig = {
 | `app-name` | `string` | `'ai-chat'` | 应用名称 |
 | `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
-| `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
+| `custom-placeholder` | `string` | `'请输入你的问题...'` | 自定义输入框的placeholder |
+| `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
@@ -356,6 +360,7 @@ const assistantConfig = {
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
 | `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
+| `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -402,7 +407,7 @@ const assistantConfig = {
 ```
 Content-Type: text/event-stream
 Cache-Control: no-cache
-Connection: keep-alive
+Connection: close
 Access-Control-Allow-Origin: *
 ```
 
@@ -423,10 +428,10 @@ Access-Control-Allow-Origin: *
 | `result` | `string` | 返回的文本内容片段 |
 | `is_end` | `boolean` | 是否为最后一个数据块 |
 
-**完整流式响应示例：**
+**node后端流式响应示例：**
 ```javascript
-// 流式响应数据示例
-[
+// node后端流式响应示例
+let mockDataArr = [
   {"code": 0, "result": "# Vue.js特点介绍\n\n", "is_end": false},
   {"code": 0, "result": "## 1. 渐进式框架\n", "is_end": false},
   {"code": 0, "result": "Vue.js采用渐进式设计，", "is_end": false},
@@ -442,6 +447,22 @@ Access-Control-Allow-Origin: *
   {"code": 0, "result": "以上就是Vue.js的主要特点。", "is_end": false},
   {"code": 0, "result": "", "is_end": true}
 ]
+
+// 流式响应示例
+res.writeHead(200, {
+  'Content-Type': 'text/event-stream',
+  'Cache-Control': 'no-cache',
+  'Connection': 'close',
+  'Access-Control-Allow-Origin': '*'
+})
+
+mockDataArr.forEach((data, index) => {
+  // 注意：每行返回一个JSON对象，以'\n\n'分隔
+  res.write(JSON.stringify(data) +'\n\n');
+  if (index === mockDataArr.length - 1) {
+    res.end()
+  }
+})
 ```
 
 ### 普通响应格式（JSON）
@@ -709,8 +730,102 @@ const callbacks = {
   // 点击AI助理消息"插入含义"按钮时触发
   clickAssistantMsgCallback: (message, index, messageObj) => {
     console.log('插入含义:', { message, index, messageObj })
+  },
+  
+  // 工单提交时触发
+  onFeedbackSubmit: (data) => {
+    console.log('工单提交:', data)
+    // data 包含:
+    // - issue: string (问题标题，最多30字)
+    // - description: string (问题描述，最多2000字)
+    // - images: FeedbackImageData[] (图片数组，最多3张)
+    // - contact: string (联系方式，邮箱或手机号)
+    
+    // 示例：发送到后端
+    fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        issue: data.issue,
+        description: data.description,
+        images: data.images.map(img => img.base64), // 使用base64
+        contact: data.contact
+      })
+    })
+    
+    // 或者使用FormData上传原始文件
+    const formData = new FormData()
+    formData.append('issue', data.issue)
+    formData.append('description', data.description)
+    formData.append('contact', data.contact)
+    data.images.forEach((img, index) => {
+      formData.append(`image_${index}`, img.file) // 使用原始File对象
+    })
+    fetch('/api/feedback', {
+      method: 'POST',
+      body: formData
+    })
   }
 }
+```
+
+## 🎫 工单提交功能
+
+组件支持收集需要人工处理的问题反馈，方便用户提交工单。
+
+### 启用工单功能
+
+```vue
+<template>
+  <SuspendedBallChat
+    :show-feedback-button="true"
+    :callbacks="callbacks"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      callbacks: {
+        onFeedbackSubmit: (data) => {
+          console.log('收到工单:', data)
+          // 处理工单提交
+          this.submitFeedback(data)
+        }
+      }
+    }
+  },
+  methods: {
+    async submitFeedback(data) {
+      try {
+        // 方式1: 使用JSON格式（base64图片）
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            issue: data.issue,
+            description: data.description,
+            images: data.images.map(img => ({
+              base64: img.base64,
+              name: img.name,
+              type: img.type,
+              size: img.size
+            })),
+            contact: data.contact
+          })
+        })
+        
+        if (response.ok) {
+          alert('工单提交成功！')
+        }
+      } catch (error) {
+        console.error('工单提交失败:', error)
+      }
+    }
+  }
+}
+</script>
 ```
 
 ## 📱 响应式设计
