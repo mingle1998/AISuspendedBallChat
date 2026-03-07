@@ -1,7 +1,7 @@
 # AI Suspended Ball Chat
 
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
-![Snipaste_2025-08-31_19-48-18.png](https://free.picui.cn/free/2025/08/31/68b437f266289.png)
+![Snipaste_2025-08-31_19-48-18.png](https://luckycola.com.cn/public/imgs/luckycola_Imghub_forever_8sbgSs4M17686524429047868.jpeg)
 
 **《组件落地场景体验1-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
 
@@ -24,6 +24,7 @@
 - 🔧 **高度可配置**: 丰富的配置选项和回调函数
 - 🚀 **TypeScript支持**: 完整的TypeScript类型定义
 - ☎️ **问题工单搜集**: 支持搜集需人工处理的问题
+- 📅 **渲染自定义组件**: 对话流中支持渲染自定义系列的组件(shoelace)
 
 ## 📦 安装
 
@@ -74,8 +75,8 @@ export default {
         onUserMessage: (message) => {
           console.log('用户发送消息:', message)
         },
-        onAssistantMessage: (message) => {
-          console.log('AI回复:', message)
+        onAssistantMessage: (message, res) => {
+          console.log('AI回复:', message, res)
         },
         onError: (error) => {
           console.error('发生错误:', error)
@@ -122,8 +123,8 @@ export default {
         onUserMessage: (message) => {
           console.log('用户发送消息:', message)
         },
-        onAssistantMessage: (message) => {
-          console.log('AI回复:', message)
+        onAssistantMessage: (message, res) => {
+          console.log('AI回复:', message, res)
         },
         onError: (error) => {
           console.error('发生错误:', error)
@@ -169,8 +170,8 @@ export default {
         onUserMessage: (message) => {
           console.log('用户发送消息:', message)
         },
-        onAssistantMessage: (message) => {
-          console.log('AI回复:', message)
+        onAssistantMessage: (message, res) => {
+          console.log('AI回复:', message, res)
         },
         onError: (error) => {
           console.error('发生错误:', error)
@@ -216,8 +217,8 @@ const callbacks = {
   onUserMessage: (message) => {
     console.log('用户发送消息:', message)
   },
-  onAssistantMessage: (message) => {
-    console.log('AI回复:', message)
+  onAssistantMessage: (message, res) => {
+    console.log('AI回复:', message, res)
   },
   onError: (error) => {
     console.error('发生错误:', error)
@@ -311,6 +312,8 @@ const assistantConfig = {
 | `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
 | `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
+| `show-task-running-box` | `boolean` | `false` | 是否显示任务执行中提示框 |
+| `task-running-text` | `string` | `'任务执行正在进行中'` | 任务执行中提示文本 |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | 聊天面板大小 |
 | `location` | `'left-top' \| 'left-center' \| 'left-bottom' \| 'right-top' \| 'right-center' \| 'right-bottom'` | `'right-center'` | 悬浮球位置 |
 | `custom-icon-url` | `string` | - | 自定义悬浮球图标URL |
@@ -319,7 +322,7 @@ const assistantConfig = {
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
-| `max-history-count` | `number` | `20` | 最大历史记录数量 |
+| `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
@@ -345,12 +348,14 @@ const assistantConfig = {
 | `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
 | `custom-placeholder` | `string` | `'请输入你的问题...'` | 自定义输入框的placeholder |
+| `show-task-running-box` | `boolean` | `false` | 是否显示任务执行中提示框 |
+| `task-running-text` | `string` | `'任务执行正在进行中'` | 任务执行中提示文本 |
 | `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
-| `max-history-count` | `number` | `20` | 最大历史记录数量 |
+| `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
@@ -422,13 +427,182 @@ Access-Control-Allow-Origin: *
 ```
 
 **字段说明：**
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `code` | `number` | 状态码，0表示成功 |
-| `result` | `string` | 返回的文本内容片段 |
+| 字段　　 | 类型　　　| 说明　　　　　　　　 |
+| ----------| -----------| ----------------------|
+| `code`　 | `number`　| 状态码，0表示成功　　|
+| `result` | `string`　| 返回的文本内容片段　 |
 | `is_end` | `boolean` | 是否为最后一个数据块 |
 
-**node后端流式响应示例：**
+#### 📅 支持渲染一些自定义组件（Shoelace Components）
+
+组件支持在 Markdown 中通过占位符语法渲染自定义组件(主要是shoelace库的组件)。后端在流式响应中下发组件配置，前端会把占位符替换成组件挂载点并渲染对应组件。
+
+| 项目　　　　　 | 位置　　　　　　　　 | 类型　　　　　　　　　　　 | 说明　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|     |
+| ----------------| ----------------------| ----------------------------| -----------------------------------------------------------------------------------------------------------------| -----|
+| 占位符语法　　 | Markdown 文本　　　　| `[[~n]]`　　　　　　　　　 | `n` 为数字编号，例如 `[[~1]]`、`[[~2]]`、`[[~3]]`。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |     |
+| 组件数据块标识 | SSE 单个 JSON 数据块 | `type: "custom-component"` | 表示本块用于描述自定义组件(不可更改)。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|     |
+| 组件渲染位置　 | SSE 单个 JSON 数据块 | `result: "[[~n]]"`　　　　 | 需要与 Markdown 中的占位符编号一致，用于绑定组件数据与挂载位置。　　　　　　　　　　　　　　　　　　　　　　　　|     |
+| 组件配置　　　 | SSE 单个 JSON 数据块 | `props: object`　　　　　　| 组件工厂消费的配置对象。`props.type` 决定渲染哪种组件。`props.data` 是不同组件需要的数据,具体参考下面案例说明。 |     |
+
+
+**内置组件类型（props.type）：**
+| props.type　　| 组件　　　　　　| data 关键字段　　　　　　　　　　　　　　　　　　 | 说明　　　　　　　　　　　　　　　　　　　 |
+| ---------------| -----------------| ---------------------------------------------------| --------------------------------------------|
+| `card`　　　　| DefaultCard　　 | `title`、 `description`、 `imageUrl` 、`jumpLink` | 默认卡片组件（支持点击跳转）。　　　　　　 |
+| `sl-card`　　 | ShoelaceCard　　| `title`、 `description` 、`imageUrl` 、`jumpLink`、`buttonText?`、`buttonLink?` | 基于 Shoelace 的卡片组件（支持点击跳转，支持底部按钮独立跳转）　 |
+| `sl-gallery`　| ShoelaceGallery | `images: {src, alt?, jumpUrl?}[]`　　　　　　　　 | 基于 Shoelace 的轮播组件（支持点击跳转）。 |
+| `sl-qr-code`　| ShoelaceQrCode　| `qrCodeUrl`、 `errorCorrection?` 、`size?`　　　　　　| 基于 Shoelace 的二维码组件。　　　　　　　 |
+| `sl-image-comparer`　| ShoelaceImageComparer　| `before: {src, alt?}`、`after: {src, alt?}`　　　　　　| 基于 Shoelace 的图片对比组件。　　　　　　　 |
+| 持续增加中... | 持续增加中..　　| 持续增加中..　　　　　　　　　　　　　　　　　　　| 持续增加中...　　　　　　　　　　　　　　　|
+
+**如果你不了解shoelace组件库的功能可以前往官网体验**: [shoelace组件官网:https://shoelace.style](https://shoelace.style/)
+
+> 流式请求模式下的渲染自定义组件的数据块示例：
+
+```json
+// card组件的数据块示例
+{
+  "code": 0,
+  "result": "[[~1]]",// 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "card",
+    "data": {
+      "title": "自定义组件测试",
+      "description": "...",
+      "jumpLink": "https://www.example.com",
+      "imageUrl": "https://picsum.photos/id/1016/800/520"
+    }
+  }
+}
+
+// sl-card组件的数据块示例
+
+{
+  "code": 0,
+  "result": "[[~2]]",// 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "sl-card",
+    "data": {
+      "title": "自定义-ShoelaceCard组件",
+      "description": "...",
+      "jumpLink": "https://www.example.com",
+      "buttonText": "点击按钮",
+      "buttonLink": "https://www.baidu.com",
+      "imageUrl": "https://picsum.photos/id/1016/800/520"
+    }
+  }
+}
+
+
+// sl-gallery组件的数据块示例
+
+{
+  "code": 0,
+  "result": "[[~3]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "sl-gallery",
+    "data": {
+      "images": [
+        {
+          "src": "https://picsum.photos/id/1015/800/520",
+          "alt": "mountains",
+          "jumpUrl": "https://www.baidu.com"
+        },
+        {
+          "src": "https://picsum.photos/id/1016/800/520",
+          "alt": "waterfall",
+          "jumpUrl": "https://www.baidu.com"
+        },
+        {
+          "src": "https://picsum.photos/id/1018/800/520",
+          "alt": "sunset"
+        }
+      ]
+    }
+  }
+}
+
+// sl-qr-code组件的数据块示例
+
+{
+  "code": 0,
+  "result": "[[~6]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "sl-qr-code", // 组件类型
+    "data": {
+      "title": "自定义-ShoelaceQrCode组件", // 组件标题
+      "qrCodeUrl": "https://www.baidu.com",// 二维码内容
+      "errorCorrection": "M",// 容错率:L/M/H/Q
+      "size": 200,// 二维码大小
+    }
+  }
+},
+
+
+// sl-image-comparer组件的数据块示例
+
+{
+  "code": 0,
+  "result": "[[~7]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "sl-image-comparer", // 组件类型
+    "data": {
+      "before": {
+        "src": "https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80&sat=-100&bri=-5",
+        "alt": "Grayscale version of kittens in a basket looking around."
+      },
+      "after": {
+        "src": "https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
+        "alt": "Color version of kittens in a basket looking around."
+      }
+    }
+  }
+},
+
+``` 
+
+> 普通请求模式（非流式）同样支持自定义组件：后端在 JSON 响应中可选返回 `result.customComponents`（key 为编号 `n`），前端会自动写入消息并渲染 Markdown 中的 `[[~n]]`。
+
+**普通 JSON 响应示例（可选 customComponents）：**
+```json
+{
+  "code": 0,
+  "result": {
+    "answer": "这里是正文... [[~1]] ... [[~2]]",
+    "customComponents": {
+      "1": {
+        "type": "card",
+        "data": {
+          "title": "自定义-卡片组件",
+          "description": "...",
+          "jumpLink": "https://www.example.com",
+          "imageUrl": "https://picsum.photos/id/1016/800/520"
+        }
+      },
+      "2": {
+        "type": "sl-card",
+        "data": {
+          "title": "自定义-ShoelaceCard组件",
+          "description": "...",
+          "jumpLink": "https://www.example.com",
+          "buttonText": "点击按钮",
+          "buttonLink": "https://www.baidu.com",
+          "imageUrl": "https://picsum.photos/id/1016/800/520"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+**🍡 完整的node后端流式响应示例：**
 ```javascript
 // node后端流式响应示例
 let mockDataArr = [
@@ -444,6 +618,21 @@ let mockDataArr = [
   {"code": 0, "result": "data() {\n  return {\n", "is_end": false},
   {"code": 0, "result": "    message: 'Hello Vue!'\n", "is_end": false},
   {"code": 0, "result": "  }\n}\n```\n\n", "is_end": false},
+  // 特殊片段1: 这是一个渲染自定义DefaultCard组件的片段
+  // { code: 0,
+  //   result: "[[~1]]",
+  //   type: "custom-component",
+  //   props: {
+  //     type: 'card',
+  //     name: "TestComponent",
+  //     data: {
+  //     title: "自定义-卡片组件",
+  //     description: "这是一个模拟的自定义组件数据块，用于测试前端的组件渲染能力。",
+  //     jumpLink: "https://www.example.com",
+  //     imageUrl: "https://picsum.photos/id/1016/800/520",
+  //     }
+  //   }
+  // }, 
   {"code": 0, "result": "以上就是Vue.js的主要特点。", "is_end": false},
   {"code": 0, "result": "", "is_end": true}
 ]
@@ -693,8 +882,18 @@ const callbacks = {
   },
   
   // AI回复时触发
-  onAssistantMessage: (message) => {
-    console.log('AI回复:', message)
+  onAssistantMessage: (message, res) => {
+    console.log('AI回复:', message, res)
+  },
+
+  // 图片选择回调（用户选择图片后触发）
+  onImageSelect: (imageData) => {
+    console.log('图片选择:', imageData)
+  },
+
+  // 图片移除回调（用户移除已选择图片后触发）
+  onImageRemove: () => {
+    console.log('图片移除')
   },
   
   // 流式响应开始
@@ -986,6 +1185,18 @@ A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:
 
 A: beta版本已支持,如需使用请下载beta版本,主版本中将不支持“深度思考模式”模式。
 
+### Q: 不同版本功能上是否有差异?
+
+A: 是的,当前有三个版本: 正式版、beta版本、alpha版本。他们的差异如下:
+
+- **正式版**: 稳定版,功能最新且齐全,但是此版本不支持“深度思考模式”模式。
+  
+- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“深度思考模式”模式,但是此版本不支持“渲染自定义组件”的功能。
+  
+- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“深度思考模式”模式, 可能存在一些未知Bug,谨慎使用.
+
+**总结: 根据您的需求选择需要的版本, 无特殊需求建议使用正式版。**
+
 ### 📦 包体积优化建议
 
 由于本组件支持代码高亮、数学公式等诸多功能，包体积较大。在业务场景使用建议按需加载：
@@ -1067,8 +1278,6 @@ import { SuspendedBallChat } from 'ai-suspended-ball-chat'
 // 如果只需要聊天面板，可以只导入ChatPanel
 import { ChatPanel } from 'ai-suspended-ball-chat'
 
-// 或者按需导入工具函数
-import { createChatInstance } from 'ai-suspended-ball-chat'
 ```
 
 
