@@ -779,52 +779,6 @@ mockDataArr.forEach((data, index) => {
 />
 ```
 
-
-## 🎨 样式自定义
-
-### 自定义主题
-
-组件支持通过CSS变量自定义主题：
-
-```css
-:root {
-  /* 主色调 */
-  --ai-chat-primary-color: #007bff;
-  --ai-chat-secondary-color: #6c757d;
-  
-  /* 背景色 */
-  --ai-chat-bg-color: #ffffff;
-  --ai-chat-panel-bg: #f8f9fa;
-  
-  /* 文字颜色 */
-  --ai-chat-text-color: #262626;
-  --ai-chat-text-muted: #595959;
-  
-  /* 边框颜色 */
-  --ai-chat-border-color: #f0f0f0;
-  
-  /* 阴影 */
-  --ai-chat-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-```
-
-### 自定义样式
-
-你可以通过CSS覆盖默认样式：
-
-```css
-/* 自定义悬浮球样式 */
-.chat-bubble {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-}
-
-/* 自定义聊天面板样式 */
-.chat-panel-container {
-  border-radius: 20px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-}
-```
-
 ## 🔧 高级配置
 
 ### 自定义请求配置
@@ -939,19 +893,14 @@ const callbacks = {
     console.log('图片移除')
   },
   
-  // 流式响应开始
-  onStreamStart: () => {
-    console.log('开始流式响应')
+  // 流式响应时触发
+  onStreamData: (data) => {
+    console.log('流式数据回调函数:', data)
   },
   
-  // 流式响应进行中
-  onStreamProgress: (partialMessage) => {
-    console.log('流式响应进度:', partialMessage)
-  },
-  
-  // 流式响应结束
-  onStreamEnd: (fullMessage) => {
-    console.log('流式响应结束:', fullMessage)
+  // 流式(或普通请求)响应结束时触发
+  onRequestEnd: (response) => {
+     console.log('请求结束:', response)
   },
   
   // 发生错误时触发
@@ -959,14 +908,14 @@ const callbacks = {
     console.error('错误:', error)
   },
   
-  // 历史记录加载时触发
-  onHistoryLoad: (history) => {
-    console.log('历史记录:', history)
+  // 历史会话已清除时候触发
+  onClearHistory: () => {
+    console.log('历史会话已清除')
   },
-  
-  // 历史记录保存时触发
-  onHistorySave: (history) => {
-    console.log('保存历史记录:', history)
+
+  // 预制任务点击时候触发
+  onPresetTaskClick: (task) => {
+    console.log('预制任务点击:', task)
   },
   
   // 点击AI助理消息"插入含义"按钮时触发
