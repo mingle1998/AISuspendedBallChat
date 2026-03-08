@@ -442,18 +442,18 @@ Access-Control-Allow-Origin: *
 | 占位符语法　　 | Markdown 文本　　　　| `[[~n]]`　　　　　　　　　 | `n` 为数字编号，例如 `[[~1]]`、`[[~2]]`、`[[~3]]`。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |     |
 | 组件数据块标识 | SSE 单个 JSON 数据块 | `type: "custom-component"` | 表示本块用于描述自定义组件(不可更改)。　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|     |
 | 组件渲染位置　 | SSE 单个 JSON 数据块 | `result: "[[~n]]"`　　　　 | 需要与 Markdown 中的占位符编号一致，用于绑定组件数据与挂载位置。　　　　　　　　　　　　　　　　　　　　　　　　|     |
-| 组件配置　　　 | SSE 单个 JSON 数据块 | `props: object`　　　　　　| 组件工厂消费的配置对象。`props.type` 决定渲染哪种组件。`props.data` 是不同组件需要的数据,具体参考下面案例说明。 |     |
-
+| 组件配置　　　 | SSE 单个 JSON 数据块 | `props: object`　　　　　　| 组件工厂消费的配置对象。`props.type` 决定渲染哪种组件。`props.data` 是不同组件需要的数据（其中 `data.id?` 可用于区分不同组件实例），具体参考下面案例说明。 |     |
 
 **内置组件类型（props.type）：**
-| props.type　　| 组件　　　　　　| data 关键字段　　　　　　　　　　　　　　　　　　 | 说明　　　　　　　　　　　　　　　　　　　 |
-| ---------------| -----------------| ---------------------------------------------------| --------------------------------------------|
-| `card`　　　　| DefaultCard　　 | `title`、 `description`、 `imageUrl` 、`jumpLink` | 默认卡片组件（支持点击跳转）。　　　　　　 |
-| `sl-card`　　 | ShoelaceCard　　| `title`、 `description` 、`imageUrl` 、`jumpLink`、`buttonText?`、`buttonLink?` | 基于 Shoelace 的卡片组件（支持点击跳转，支持底部按钮独立跳转）　 |
-| `sl-gallery`　| ShoelaceGallery | `images: {src, alt?, jumpUrl?}[]`　　　　　　　　 | 基于 Shoelace 的轮播组件（支持点击跳转）。 |
-| `sl-qr-code`　| ShoelaceQrCode　| `qrCodeUrl`、 `errorCorrection?` 、`size?`　　　　　　| 基于 Shoelace 的二维码组件。　　　　　　　 |
-| `sl-image-comparer`　| ShoelaceImageComparer　| `before: {src, alt?}`、`after: {src, alt?}`　　　　　　| 基于 Shoelace 的图片对比组件。　　　　　　　 |
-| 持续增加中... | 持续增加中..　　| 持续增加中..　　　　　　　　　　　　　　　　　　　| 持续增加中...　　　　　　　　　　　　　　　|
+| props.type　　　　　| 组件　　　　　　　　　| data 关键字段　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 | 说明　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
+| ---------------------| -----------------------| ---------------------------------------------------------------------------------| -----------------------------------------------------------------------|
+| `card`　　　　　　　| DefaultCard　　　　　 | `id?`、`title`、 `description`、 `imageUrl` 、`jumpLink`　　　　　　　　　　　　 | 默认卡片组件（支持点击跳转）。　　　　　　　　　　　　　　　　　　　　|
+| `sl-card`　　　　　 | ShoelaceCard　　　　　| `id?`、`title`、 `description` 、`imageUrl` 、`jumpLink`、`buttonText?`、`buttonLink?` | 基于 Shoelace 的卡片组件（支持点击跳转，支持底部按钮独立跳转）　　　　|
+| `sl-gallery`　　　　| ShoelaceGallery　　　 | `id?`、`images: {src, alt?, jumpUrl?}[]`　　　　　　　　　　　　　　　　　　　 | 基于 Shoelace 的轮播组件（支持点击跳转）。　　　　　　　　　　　　　　|
+| `sl-qr-code`　　　　| ShoelaceQrCode　　　　| `id?`、`qrCodeUrl`、 `errorCorrection?` 、`size?`　　　　　　　　　　　　　　　 | 基于 Shoelace 的二维码组件。　　　　　　　　　　　　　　　　　　　　　|
+| `sl-image-comparer` | ShoelaceImageComparer | `id?`、`before: {src, alt?}`、`after: {src, alt?}`　　　　　　　　　　　　　　　 | 基于 Shoelace 的图片对比组件。　　　　　　　　　　　　　　　　　　　　|
+| `sl-card-group`　　 | ShoelaceCardGroup　　 | `id?`、`items: {imageUrl?, videoUrl?, title?, description?, jumpLink?}[]`　　　　| 基于 Shoelace 的横向媒体卡片组（图片/视频自适应宽度，支持点击跳转）。 |
+| 持续增加中...　　　 | 持续增加中..　　　　　| 持续增加中..　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　| 持续增加中...　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |
 
 **如果你不了解shoelace组件库的功能可以前往官网体验**: [shoelace组件官网:https://shoelace.style](https://shoelace.style/)
 
@@ -468,6 +468,7 @@ Access-Control-Allow-Origin: *
   "props": {
     "type": "card",
     "data": {
+      "id": "1",
       "title": "自定义组件测试",
       "description": "...",
       "jumpLink": "https://www.example.com",
@@ -485,6 +486,7 @@ Access-Control-Allow-Origin: *
   "props": {
     "type": "sl-card",
     "data": {
+      "id": "2",
       "title": "自定义-ShoelaceCard组件",
       "description": "...",
       "jumpLink": "https://www.example.com",
@@ -505,6 +507,7 @@ Access-Control-Allow-Origin: *
   "props": {
     "type": "sl-gallery",
     "data": {
+      "id": "3",
       "images": [
         {
           "src": "https://picsum.photos/id/1015/800/520",
@@ -534,6 +537,7 @@ Access-Control-Allow-Origin: *
   "props": {
     "type": "sl-qr-code", // 组件类型
     "data": {
+      "id": "6",
       "title": "自定义-ShoelaceQrCode组件", // 组件标题
       "qrCodeUrl": "https://www.baidu.com",// 二维码内容
       "errorCorrection": "M",// 容错率:L/M/H/Q
@@ -552,6 +556,7 @@ Access-Control-Allow-Origin: *
   "props": {
     "type": "sl-image-comparer", // 组件类型
     "data": {
+      "id": "7",
       "before": {
         "src": "https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80&sat=-100&bri=-5",
         "alt": "Grayscale version of kittens in a basket looking around."
@@ -560,6 +565,41 @@ Access-Control-Allow-Origin: *
         "src": "https://images.unsplash.com/photo-1517331156700-3c241d2b4d83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80",
         "alt": "Color version of kittens in a basket looking around."
       }
+    }
+  }
+},
+
+
+// sl-card-group组件的数据块示例
+
+{
+  "code": 0,
+  "result": "[[~8]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component", // 固定值,不可更改
+  "props": {
+    "type": "sl-card-group", // 组件类型
+    "data": {
+      "id": "8",
+      "items": [
+        {
+          "imageUrl": "https://picsum.photos/id/1011/360/520",
+          "title": "色拉寺的辩经很有意思，但标题太长需要省略显示",
+          "description": "这里是描述，超过一行时应该出现省略号。",
+          "jumpLink": "https://www.example.com"
+        },
+        {
+          "imageUrl": "https://picsum.photos/id/1025/420/520",
+          "title": "带你了解：色拉寺的辩经与流派文化",
+          "description": "点击卡片会跳转到 jumpLink；如果没给 jumpLink，则会打开媒体地址。",
+          "jumpLink": "https://www.baidu.com"
+        },
+        {
+          "videoUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+          "title": "远看像：短视频卡片（videoUrl 优先）",
+          "description": "这是一个视频示例（muted/playsinline/autoplay/loop），用于测试宽度由媒体撑开。",
+          "jumpLink": "https://developer.mozilla.org/"
+        }
+      ]
     }
   }
 },
@@ -578,6 +618,7 @@ Access-Control-Allow-Origin: *
       "1": {
         "type": "card",
         "data": {
+          "id": "1",
           "title": "自定义-卡片组件",
           "description": "...",
           "jumpLink": "https://www.example.com",
@@ -587,6 +628,7 @@ Access-Control-Allow-Origin: *
       "2": {
         "type": "sl-card",
         "data": {
+          "id": "2",
           "title": "自定义-ShoelaceCard组件",
           "description": "...",
           "jumpLink": "https://www.example.com",
@@ -626,6 +668,7 @@ let mockDataArr = [
   //     type: 'card',
   //     name: "TestComponent",
   //     data: {
+  //     id: "1",
   //     title: "自定义-卡片组件",
   //     description: "这是一个模拟的自定义组件数据块，用于测试前端的组件渲染能力。",
   //     jumpLink: "https://www.example.com",
