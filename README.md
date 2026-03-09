@@ -320,6 +320,7 @@ const assistantConfig = {
 | `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
+| `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
@@ -353,6 +354,7 @@ const assistantConfig = {
 | `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
 | `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
+| `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
@@ -1052,6 +1054,76 @@ interface AssistantConfig {
   description?: string // AI助手描述
 }
 ```
+
+---
+
+## 📝 Markdown 渲染增强
+
+组件支持对 Markdown 内容进行增强渲染，包括高亮标记、Callout 提示框等语法。
+
+### 高亮标记语法
+
+支持使用 `== ==` 语法高亮文本，可指定自定义颜色。
+
+**基本用法：**
+```markdown
+这是一段 ==高亮文本== 示例
+```
+
+**自定义颜色：**
+```markdown
+支持十六进制颜色: =={#ff6b6b}红色高亮==
+支持颜色名称: =={#FFD93D}黄色高亮==
+```
+
+**渲染效果：**
+- 基础高亮使用默认黄色背景
+- 自定义颜色使用 CSS 变量动态设置
+- 支持跨行断行显示
+
+
+### Callout 提示框
+
+支持使用 `:::` 语法创建多种类型的提示框。
+
+**语法格式：**
+```markdown
+:::type 标题
+提示内容，支持完整的 Markdown 语法
+:::
+```
+
+**支持的类型：**
+
+| 类型 | 说明 | 示例 |
+|------|------|------|
+| `tip` | 提示信息，绿色边框 | `:::tip 提示` |
+| `info` | 信息说明，蓝色边框 | `:::info 信息` |
+| `note` | 普通注释，灰色边框 | `:::note 注意` |
+| `warning` | 警告信息，黄色边框 | `:::warning 警告` |
+| `danger` | 危险提示，红色边框 | `:::danger 危险` |
+
+**完整示例：**
+```markdown
+:::tip 提示
+这是一个提示信息，支持**粗体**和*斜体*。
+:::
+
+:::warning 注意事项
+1. 第一项注意
+2. 第二项注意
+   - 子项 A
+   - 子项 B
+:::
+```
+
+**特性说明：**
+- Callout 内部支持完整的 Markdown 语法
+- 标题可自定义，不填写则显示类型大写名称
+- 五种预设样式，适配不同场景
+- 自动处理内部内容的 Markdown 渲染
+
+---
 
 
 ## ❓ 常见问题
