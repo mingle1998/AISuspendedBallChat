@@ -25,6 +25,8 @@
 - 🚀 **TypeScript支持**: 完整的TypeScript类型定义
 - ☎️ **问题工单搜集**: 支持搜集需人工处理的问题
 - 📅 **渲染自定义组件**: 对话流中支持渲染自定义系列的组件(shoelace)
+- 📊 **ECharts 图表渲染**: 支持在 Markdown 中使用 echarts 代码块渲染图表
+
 
 ## 📦 安装
 
@@ -304,7 +306,7 @@ const assistantConfig = {
 ## 📋 API 参考
 
 ### SuspendedBallChat Props
-
+ 
 | 属性名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
@@ -324,6 +326,7 @@ const assistantConfig = {
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
+| `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
@@ -341,7 +344,7 @@ const assistantConfig = {
 | `callbacks` | `ChatCallbacks` | - | 回调函数 |
 
 ### ChatPanel Props
-
+ 
 | 属性名 | 类型 | 默认值 | 说明 |
 |--------|------|--------|------|
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
@@ -358,6 +361,7 @@ const assistantConfig = {
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
+| `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
@@ -698,6 +702,8 @@ mockDataArr.forEach((data, index) => {
   }
 })
 ```
+==**温馨提示**:==
+> 如果你不知道如何实现一个后端AI Agent的接口,可以使用下面这个现成的Node版本“**Agent脚手架**”: [https://github.com/mingle98/AI-Agent-Node](https://github.com/mingle98/AI-Agent-Node)
 
 ### 普通响应格式（JSON）
 
@@ -1123,6 +1129,125 @@ interface AssistantConfig {
 - 五种预设样式，适配不同场景
 - 自动处理内部内容的 Markdown 渲染
 
+## 📊 Markdown 渲染 ECharts 图表
+
+组件支持在 Markdown 内容中通过 echarts 代码块渲染 ECharts 图表。
+
+### 1) 宿主页面引入 ECharts（CDN）
+
+该能力默认不打包 ECharts，请在你的宿主页面通过 `script` 标签手动引入（示例：`index.html`）：
+
+```html
+<!-- ECharts CDN -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+```
+
+### 2) Markdown 语法
+
+**在 AI 回复（或任意 Markdown 内容）中输出如下代码块：**
+
+```markdown
+\`\`\`echarts
+{
+  "title": { "text": "每周销量" },
+  "tooltip": {},
+  "xAxis": { "type": "category", "data": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] },
+  "yAxis": { "type": "value" },
+  "series": [
+    { "type": "bar", "data": [120, 200, 150, 80, 70, 110, 130] }
+  ]
+}
+\`\`\`
+```
+
+**下面是流式响应中返回的 echarts 代码块示例:**
+
+```json
+{ code: 0, result: "## 📊 ECharts 图表测试\n\n" },
+  { code: 0, result: "下面是一个柱状图（使用 echarts 代码块，内容为 JSON 配置）：\n\n" },
+  { code: 0, result: "```echarts\n{\n  \"title\": { \"text\": \"每周销量\" },\n  \"tooltip\": {},\n  \"xAxis\": { \"type\": \"category\", \"data\": [\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\",\"Sat\",\"Sun\"] },\n  \"yAxis\": { \"type\": \"value\" },\n  \"series\": [\n    { \"type\": \"bar\", \"data\": [120, 200, 150, 80, 70, 110, 130] }\n  ]\n}\n```\n\n" },
+  { code: 0, result: "再来一个折线图：\n\n" },
+  { code: 0, result: "```echarts\n{\n  \"title\": { \"text\": \"温度趋势\" },\n  \"tooltip\": { \"trigger\": \"axis\" },\n  \"legend\": { \"data\": [\"最高\", \"最低\"] },\n  \"xAxis\": {\n    \"type\": \"category\",\n    \"boundaryGap\": false,\n    \"data\": [\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\",\"Sat\",\"Sun\"]\n  },\n  \"yAxis\": { \"type\": \"value\" },\n  \"series\": [\n    { \"name\": \"最高\", \"type\": \"line\", \"data\": [11, 11, 15, 13, 12, 13, 10], \"smooth\": true },\n    { \"name\": \"最低\", \"type\": \"line\", \"data\": [1, -2, 2, 5, 3, 2, 0], \"smooth\": true }\n  ]\n}\n```\n\n" },
+  { code: 0, result: "饼图：\n\n" },
+  { code: 0, result: "```echarts\n{\n  \"title\": { \"text\": \"浏览器份额\", \"left\": \"center\" },\n  \"tooltip\": { \"trigger\": \"item\" },\n  \"legend\": { \"orient\": \"vertical\", \"left\": \"left\" },\n  \"series\": [\n    {\n      \"name\": \"Share\",\n      \"type\": \"pie\",\n      \"radius\": \"55%\",\n      \"center\": [\"50%\", \"60%\"],\n      \"data\": [\n        { \"value\": 1048, \"name\": \"Chrome\" },\n        { \"value\": 735, \"name\": \"Firefox\" },\n        { \"value\": 580, \"name\": \"Edge\" },\n        { \"value\": 484, \"name\": \"Safari\" },\n        { \"value\": 300, \"name\": \"Other\" }\n      ]\n    }\n  ]\n}\n```\n\n" },
+```
+
+**下面是非流式响应中返回的 echarts 代码块示例:**
+
+```json
+{
+  "code": 0,
+  "result": {
+    "answer": `
+### 📊 ECharts 图表测试
+
+下面是一个柱状图（使用 echarts 代码块，内容为 JSON 配置）：
+
+\`\`\`echarts
+{
+  "title": { "text": "每周销量" },
+  "tooltip": {},
+  "xAxis": { "type": "category", "data": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] },
+  "yAxis": { "type": "value" },
+  "series": [
+    { "type": "bar", "data": [120, 200, 150, 80, 70, 110, 130] }
+  ]
+}
+\`\`\`
+
+再来一个折线图：
+
+\`\`\`echarts
+{
+  "title": { "text": "温度趋势" },
+  "tooltip": { "trigger": "axis" },
+  "legend": { "data": ["最高", "最低"] },
+  "xAxis": {
+    "type": "category",
+    "boundaryGap": false,
+    "data": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+  },
+  "yAxis": { "type": "value" },
+  "series": [
+    { "name": "最高", "type": "line", "data": [11, 11, 15, 13, 12, 13, 10], "smooth": true },
+    { "name": "最低", "type": "line", "data": [1, -2, 2, 5, 3, 2, 0], "smooth": true }
+  ]
+}
+\`\`\`
+
+饼图：
+
+\`\`\`echarts
+{
+  "title": { "text": "浏览器份额", "left": "center" },
+  "tooltip": { "trigger": "item" },
+  "legend": { "orient": "vertical", "left": "left" },
+  "series": [
+    {
+      "name": "Share",
+      "type": "pie",
+      "radius": "55%",
+      "center": ["50%", "60%"],
+      "data": [
+        { "value": 1048, "name": "Chrome" },
+        { "value": 735, "name": "Firefox" },
+        { "value": 580, "name": "Edge" },
+        { "value": 484, "name": "Safari" },
+        { "value": 300, "name": "Other" }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+`
+  }
+}
+```
+
+### 3) 注意事项
+
+- **配置格式**: 当前 echarts 代码块内容以 `JSON.parse` 解析，因此需要是严格 JSON（不支持函数等 JS 写法）。
 ---
 
 
