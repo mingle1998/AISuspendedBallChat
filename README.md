@@ -1140,6 +1140,7 @@ interface AssistantConfig {
 ```html
 <!-- ECharts CDN -->
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<!-- <script src="https://unpkg.com/echarts@5.0.0/dist/echarts.min.js"></script> -->
 ```
 
 ### 2) Markdown 语法
@@ -1368,7 +1369,7 @@ A: 目前语音输入默认使用中文简体（zh-CN）.
 
 ###  Q: 如何在小助理消息中支持解析mermaid语法
 
-A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:https://cdn.jsdelivr.net/npm/mermaid@11.10.1/dist/mermaid.min.js
+A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:https://cdn.jsdelivr.net/npm/mermaid@11.10.1/dist/mermaid.min.js 或者 https://unpkg.com/mermaid@11.10.1/dist/mermaid.min.js
 
 ### Q: 组件是否支持“深度思考模式”模式？
 
