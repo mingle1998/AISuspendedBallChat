@@ -1373,17 +1373,40 @@ A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:
 
 ### Q: 组件是否支持“深度思考模式”模式？
 
-A: beta版本已支持,如需使用请下载beta版本,主版本中将不支持“深度思考模式”模式。
+A: beta版本已支持“**显性(有按钮UI)的深度思考模式**”,如需使用请下载beta版本.主版本中将不支持“**显性(有按钮UI)的深度思考模式**”模式,但是你仍然可以通过后端流式响应的“思考过程内容”通过包裹`<details><summary >思考过程</summary>思考的内容</details>`这种方式间接实现“深度思考模式”的功能,下面附上实现的关键代码.
+
+```js
+export function escapeHtml(input) {
+  return String(input)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+export function wrapThinkingOpen(summaryText = "深度思考过程") {
+  return `<details open style="margin: 8px 0; padding: 0;"><summary style="cursor: pointer; color: #999; font-size: 13px;position: relative;left: -2px;font-weight: 500;padding-bottom: 3px;">${escapeHtml(summaryText)} 🌀 </summary><div style="border-left: 2px solid #d9d9d9; padding-left: 8px; color: #999; font-size: 12px; font-family: inherit;">`;
+}
+
+export function wrapThinkingClose() {
+  return `</div></details>\n\n---\n`;
+}
+
+```
+
+> 这种`<details><summary >`实现“深度思考功能”的方案已经在下面这个**开源Node Agent脚手架**项目中已经实现,可参考:  [https://github.com/mingle98/AI-Agent-Node](https://github.com/mingle98/AI-Agent-Node)
+
 
 ### Q: 不同版本功能上是否有差异?
 
 A: 是的,当前有三个版本: 正式版、beta版本、alpha版本。他们的差异如下:
 
-- **正式版**: 稳定版,功能最新且齐全,但是此版本不支持“深度思考模式”模式。
+- **正式版**: 稳定版,功能最新且齐全,但此版本不支持“**显性(有按钮UI)的深度思考模式**”模式,但是你可以通过后端将“思考内容”用`<details><summary >`包裹间接实现这个功能.
   
-- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“深度思考模式”模式,但是此版本不支持“渲染自定义组件”的功能。
+- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“**显性(有按钮UI)的深度思考模式**”模式,但是此版本不支持“渲染自定义组件”等功能。
   
-- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“深度思考模式”模式, 可能存在一些未知Bug,谨慎使用.
+- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“**显性(有按钮UI)的深度思考模式**”模式, 可能存在一些未知Bug,谨慎使用.
 
 **总结: 根据您的需求选择需要的版本, 无特殊需求建议使用正式版。**
 
