@@ -1,7 +1,7 @@
 # AI Suspended Ball Chat
 
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
-![Snipaste_2025-08-31_19-48-18.png](https://luckycola.com.cn/public/imgs/luckycola_Imghub_forever_8sbgSs4M17686524429047868.jpeg)
+![Snipaste_2025-08-31_19-48-18.png](./aiChat.gif)
 
 **《组件落地场景体验1-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
 
@@ -451,15 +451,17 @@ Access-Control-Allow-Origin: *
 | 组件配置　　　 | SSE 单个 JSON 数据块 | `props: object`　　　　　　| 组件工厂消费的配置对象。`props.type` 决定渲染哪种组件。`props.data` 是不同组件需要的数据（其中 `data.id?` 可用于区分不同组件实例），具体参考下面案例说明。 |     |
 
 **内置组件类型（props.type）：**
-| props.type　　　　　| 组件　　　　　　　　　| data 关键字段　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 | 说明　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
-| ---------------------| -----------------------| ---------------------------------------------------------------------------------| -----------------------------------------------------------------------|
-| `card`　　　　　　　| DefaultCard　　　　　 | `id?`、`title`、 `description`、 `imageUrl` 、`jumpLink`　　　　　　　　　　　　 | 默认卡片组件（支持点击跳转）。　　　　　　　　　　　　　　　　　　　　|
-| `sl-card`　　　　　 | ShoelaceCard　　　　　| `id?`、`title`、 `description` 、`imageUrl` 、`jumpLink`、`buttonText?`、`buttonLink?` | 基于 Shoelace 的卡片组件（支持点击跳转，支持底部按钮独立跳转）　　　　|
-| `sl-gallery`　　　　| ShoelaceGallery　　　 | `id?`、`images: {src, alt?, jumpUrl?}[]`　　　　　　　　　　　　　　　　　　　 | 基于 Shoelace 的轮播组件（支持点击跳转）。　　　　　　　　　　　　　　|
-| `sl-qr-code`　　　　| ShoelaceQrCode　　　　| `id?`、`qrCodeUrl`、 `errorCorrection?` 、`size?`　　　　　　　　　　　　　　　 | 基于 Shoelace 的二维码组件。　　　　　　　　　　　　　　　　　　　　　|
-| `sl-image-comparer` | ShoelaceImageComparer | `id?`、`before: {src, alt?}`、`after: {src, alt?}`　　　　　　　　　　　　　　　 | 基于 Shoelace 的图片对比组件。　　　　　　　　　　　　　　　　　　　　|
-| `sl-card-group`　　 | ShoelaceCardGroup　　 | `id?`、`items: {imageUrl?, videoUrl?, title?, description?, jumpLink?}[]`　　　　| 基于 Shoelace 的横向媒体卡片组（图片/视频自适应宽度，支持点击跳转）。 |
-| 持续增加中...　　　 | 持续增加中..　　　　　| 持续增加中..　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　| 持续增加中...　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |
+| props.type　　　　　| 组件　　　　　　　　　| data 关键字段　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　| 说明　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　|
+| ---------------------| -----------------------| ------------------------------------------------------------------------------------------------------| ---------------------------------------------------------------------------|
+| `card`　　　　　　　| DefaultCard　　　　　 | `id?`、`title`、 `description`、 `imageUrl` 、`jumpLink`　　　　　　　　　　　　　　　　　　　　　　 | 默认卡片组件（支持点击跳转）。　　　　　　　　　　　　　　　　　　　　　　|
+| `sl-card`　　　　　 | ShoelaceCard　　　　　| `id?`、`title`、 `description` 、`imageUrl` 、`jumpLink`、`buttonText?`、`buttonLink?`　　　　　　　 | 基于 Shoelace 的卡片组件（支持点击跳转，支持底部按钮独立跳转）　　　　　　|
+| `sl-gallery`　　　　| ShoelaceGallery　　　 | `id?`、`images: {src, alt?, jumpUrl?}[]`　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 | 基于 Shoelace 的轮播组件（支持点击跳转）。　　　　　　　　　　　　　　　　|
+| `sl-qr-code`　　　　| ShoelaceQrCode　　　　| `id?`、`qrCodeUrl`、 `errorCorrection?` 、`size?`　　　　　　　　　　　　　　　　　　　　　　　　　　| 基于 Shoelace 的二维码组件。　　　　　　　　　　　　　　　　　　　　　　　|
+| `sl-image-comparer` | ShoelaceImageComparer | `id?`、`before: {src, alt?}`、`after: {src, alt?}`　　　　　　　　　　　　　　　　　　　　　　　　　 | 基于 Shoelace 的图片对比组件。　　　　　　　　　　　　　　　　　　　　　　|
+| `sl-card-group`　　 | ShoelaceCardGroup　　 | `id?`、`items: {imageUrl?, videoUrl?, title?, description?, jumpLink?}[]`　　　　　　　　　　　　　　| 基于 Shoelace 的横向媒体卡片组（图片/视频自适应宽度，支持点击跳转）。　　 |
+| `select-list-card`　| SelectListCard　　　　| `id?`、`title?`、`multiple?`、`confirmText?`、`options: {label, value, disabled?}[]`　　　　　　　　 | 可选择列表项组件（支持单选/多选），点击确认后会派发全局事件供业务层消费。 |
+| `input-form-card`　 | InputFormCard　　　　 | `id?`、`title?`、`placeholder?`、`submitText?`、`required?`、`requiredMessage?`、`clearAfterSubmit?` | 输入表单组件，支持必填校验，提交后会派发全局事件供业务层消费。　　　　　　|
+| 持续增加中...　　　 | 持续增加中..　　　　　| 持续增加中..　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 | 持续增加中...　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 |
 
 **如果你不了解shoelace组件库的功能可以前往官网体验**: [shoelace组件官网:https://shoelace.style](https://shoelace.style/)
 
@@ -610,7 +612,73 @@ Access-Control-Allow-Origin: *
   }
 },
 
+// select-list-card 组件的数据块示例
+{
+  "code": 0,
+  "result": "[[~9]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component",// 固定值,不可更改
+  "props": {
+    "type": "select-list-card",// 组件类型
+    "data": {
+      "id": "9",
+      "title": "可选择列表项（单选）",
+      "multiple": false, // 是否是多选
+      "confirmText": "确认选择",
+      "options": [
+        { "label": "选项 A", "value": "A" },
+        { "label": "选项 B", "value": "B" },
+        { "label": "选项 C（禁用）", "value": "C", "disabled": true },
+        { "label": "选项 D", "value": "D" }
+      ]
+    }
+  }
+},
+
+// input-form-card 组件的数据块示例
+{
+  "code": 0,
+  "result": "[[~11]]", // 固定格式,其中的数字可以更改
+  "type": "custom-component",// 固定值,不可更改
+  "props": {
+    "type": "input-form-card",// 组件类型
+    "data": {
+      "id": "11",
+      "title": "请输入你的姓名：",
+      "placeholder": "输入框",
+      "submitText": "提交按钮",
+      "required": true, // 是否是必须的
+      "requiredMessage": "姓名不能为空",
+      "clearAfterSubmit": false // 是否在提交后清空输入内容
+    }
+  }
+},
+
 ``` 
+
+#### 📣 业务层如何接收 SelectListCard / InputFormCard 的提交结果
+
+这类自定义组件是在 Markdown 渲染阶段动态挂载的（不是你模板里手写的组件标签）。因此**业务层建议通过全局事件接收交互结果**。
+
+**SelectListCard 确认选择事件：**
+- 事件名：`cc-select-list-confirm`
+- `detail` 结构：`{ id?: any; selected: any; data: any }`
+
+**InputFormCard 表单提交事件：**
+- 事件名：`cc-input-form-submit`
+- `detail` 结构：`{ id?: any; value: string; data: any }`
+
+```js
+// 业务层监听（示例）
+window.addEventListener('cc-select-list-confirm', (e) => {
+  const { id, selected, data } = e.detail || {}
+  console.log('[SelectListCard] 确认选择:', { id, selected, data })
+})
+
+window.addEventListener('cc-input-form-submit', (e) => {
+  const { id, value, data } = e.detail || {}
+  console.log('[InputFormCard] 表单提交:', { id, value, data })
+})
+```
 
 > 普通请求模式（非流式）同样支持自定义组件：后端在 JSON 响应中可选返回 `result.customComponents`（key 为编号 `n`），前端会自动写入消息并渲染 Markdown 中的 `[[~n]]`。
 
