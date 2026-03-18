@@ -1,4 +1,4 @@
-# AI Suspended Ball Chat
+# AISuspendedBallChat-Vue3组件
 
 一个功能强大的AI聊天组件，支持流式响应、图片上传、语音播报、历史记录管理等功能。可以作为悬浮球或独立面板使用。
 ![Snipaste_2025-08-31_19-48-18.png](./aiChat.gif)
