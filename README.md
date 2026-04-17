@@ -22,9 +22,31 @@
 
 ![Snipaste_2025-08-31_19-48-18.png](./aiChat.gif)
 
-**《组件落地场景体验1-AI简历助手》**: [https://luckycola.com.cn/public/resume/#/resume](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
+**《组件落地场景体验1-AI简历助手》**: [点击直达案例1🔗](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
 
-**《组件落地场景体验2-AI编程助手》**: [https://luckycola.com.cn/public/dist/onlineCodeEditor.html#/editor](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=123456789#/editor)
+**《组件落地场景体验2-AI编程助手》**: [点击直达案例2🔗](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=123456789#/editor)
+
+> **🔔 温馨提示:** 如果您觉得阅读文档困难,也可以选择咨询*在线AI助手*: [🤖点击直达咨询→](https://luckycola.com.cn/public/dist/aiAgent.html?openChat=1#/)
+---
+
+## ✨ 特性
+
+- 🤖 **AI对话**: 支持与AI进行自然语言对话
+- 📡 **多模式请求**: 支持普通请求和流式(SSE)响应、WebSocket三种模式
+- 🖼️ **图片上传**: 支持图片上传和AI图像识别
+- 🎤 **语音输入**: 支持语音转文字输入，便捷的语音交互
+- 🔊 **语音播报**: 支持AI回复内容的语音播报
+- 📝 **获取AI消息**: 支持将AI内容插入到用户的编辑器或其他应用
+- 💾 **历史记录**: 本地存储对话历史，支持历史记录管理
+- 🎨 **主题切换**: 支持白天/夜间模式切换
+- 🔗 **引用内容**: 支持选择引用页面中(上传)的文本作为上下文
+- 📱 **自定义接口**: 支持用户自定义后端接口
+- 🔧 **高度可配置**: 丰富的配置选项和回调函数
+- 🚀 **TypeScript支持**: 完整的TypeScript类型定义
+- ☎️ **问题工单搜集**: 支持搜集需人工处理的问题
+- 📅 **渲染自定义组件**: 对话流中支持渲染自定义系列的组件(shoelace)
+- 📊 **ECharts 图表渲染**: 支持在 Markdown 中使用 echarts 代码块渲染图表
+
 
 ## 📦 安装
 
@@ -318,7 +340,7 @@ const assistantConfig = {
 | `location` | `'left-top' \| 'left-center' \| 'left-bottom' \| 'right-top' \| 'right-center' \| 'right-bottom'` | `'right-center'` | 悬浮球位置 |
 | `custom-icon-url` | `string` | - | 自定义悬浮球图标URL |
 | `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
-| `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
+| `enable-streaming` | `boolean` | `false` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
@@ -327,12 +349,13 @@ const assistantConfig = {
 | `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
-| `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
+| `enable-voice-input` | `boolean` | `false` | 是否启用语音输入 |
+| `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
-| `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
+| `show-clear-button` | `boolean` | `false` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
@@ -353,7 +376,7 @@ const assistantConfig = {
 | `show-task-running-box` | `boolean` | `false` | 是否显示任务执行中提示框 |
 | `task-running-text` | `string` | `'任务执行正在进行中'` | 任务执行中提示文本 |
 | `max-input-length` | `number` | `2000` | 用户输入最大字符数限制 |
-| `enable-streaming` | `boolean` | `true` | 是否启用流式响应 |
+| `enable-streaming` | `boolean` | `false` | 是否启用流式响应 |
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
@@ -362,12 +385,13 @@ const assistantConfig = {
 | `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
-| `enable-voice-input` | `boolean` | `true` | 是否启用语音输入 |
+| `enable-voice-input` | `boolean` | `false` | 是否启用语音输入 |
+| `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
 | `show-close-button` | `boolean` | `true` | 是否显示关闭按钮 |
-| `show-clear-button` | `boolean` | `true` | 是否显示清除按钮 |
+| `show-clear-button` | `boolean` | `false` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
@@ -386,6 +410,8 @@ const assistantConfig = {
 
 #### SuspendedBallChat Methods
 
+> 你可以通过 `ref` 获取组件实例并调用以下方法（Vue 3 `script setup` / Options API 均可）。
+
 | 方法名 | 参数 | 返回值 | 说明 |
 |--------|------|--------|------|
 | `sendMessage` | `message: string` | - | 主动发起AI对话 |
@@ -396,6 +422,9 @@ const assistantConfig = {
 | `openPanel` | - | - | 打开聊天面板 |
 | `closePanel` | - | `boolean` | 关闭聊天面板 |
 | `isPanelVisible` | - | `boolean` | 检查面板是否可见 |
+| `getUiHistory` | - | `ChatMessage[]` | 获取当前 UI 历史列表（内存快照） |
+| `reloadUiHistory` | - | `Promise<ChatMessage[]>` | 从本地存储重载并返回最新 UI 历史列表 |
+| `setUiHistory` | `nextUiHistory: ChatMessage[]` | - | 主动设置 UI 历史列表（用于从后端注入历史，内部会进行必要校验；校验失败会提示且不会写入） |
 
 #### ChatPanel Methods
 
@@ -407,6 +436,9 @@ const assistantConfig = {
 | `stopRequest` | - | - | 停止当前请求 |
 | `isStreaming` | - | `boolean` | 检查是否正在流式响应 |
 | `scrollToBottom` | - | - | 滚动到底部 |
+| `getUiHistory` | - | `ChatMessage[]` | 获取当前 UI 历史列表（内存快照） |
+| `reloadUiHistory` | - | `Promise<ChatMessage[]>` | 从本地存储重载并返回最新 UI 历史列表 |
+| `setUiHistory` | `nextUiHistory: ChatMessage[]` | - | 主动设置 UI 历史列表（用于从后端注入历史，内部会进行必要校验；校验失败会提示且不会写入） |
 
 ## 🔌 自定义后端接口需要返回数据格式
 
@@ -768,6 +800,58 @@ mockDataArr.forEach((data, index) => {
   }
 })
 ```
+
+### WebSocket 流式响应兼容格式
+
+组件当前会自动识别 `ws://` / `wss://`，并兼容以下两类 WebSocket 分片格式：
+
+#### 1. 兼容原有流式格式
+
+```json
+{"code": 0, "result": "# Vue.js特点介绍\n\n", "is_end": false}
+{"code": 0, "result": "以上就是Vue.js的主要特点。", "is_end": false}
+{"code": 0, "result": "", "is_end": true}
+```
+
+说明：这类格式与原有 SSE/流式分片定义保持一致，`result` 为字符串分片，`is_end` 为结束标识。
+
+#### 2. 更常见的业务型 WebSocket 协议
+
+```json
+{"code": 0, "type": "token", "data": {"content": "# Vue.js特点介绍\n\n"}, "is_end": false}
+{"code": 0, "type": "token", "data": {"content": "以上就是Vue.js的主要特点。"}, "is_end": false}
+{"code": 0, "type": "finish", "data": {"content": "# Vue.js特点介绍\n\n以上就是Vue.js的主要特点。"}, "is_end": true}
+```
+
+说明：对于 `type: "token" / "finish"` 这类消息，前端会优先读取 `data.content`；同时也兼容 `data.text`、`data.delta`、`result.answer`、`result` 等字段。
+
+#### 3. WebSocket 自定义组件片段
+
+如果需要在 WebSocket 流式返回中插入自定义组件，也兼容以下形式：
+
+```json
+{
+  "code": 0,
+  "type": "finish",
+  "data": {
+    "content": "这里是正文... [[~1]]",
+    "customComponents": {
+      "1": {
+        "type": "card",
+        "data": {
+          "id": "1",
+          "title": "自定义-卡片组件",
+          "description": "这是一个模拟的自定义组件数据块，用于测试前端的组件渲染能力。",
+          "jumpLink": "https://www.example.com",
+          "imageUrl": "https://picsum.photos/id/1016/800/520"
+        }
+      }
+    }
+  },
+  "is_end": true
+}
+```
+
 ==**温馨提示**:==
 > 如果你不知道如何实现一个后端AI Agent的接口,可以使用下面这个现成的Node版本“**Agent脚手架**”: [https://github.com/mingle98/AI-Agent-Node](https://github.com/mingle98/AI-Agent-Node)
 
@@ -879,6 +963,55 @@ const welcomeConfig = {
 }
 ```
 
+### 获取/设置历史列表数据
+
+- `getUiHistory()`：获取当前内存中的 UI 历史列表快照
+- `reloadUiHistory()`：从本地存储重载后，返回最新 UI 历史列表
+- `setUiHistory(nextUiHistory)`：业务方从后端获取历史列表后，主动注入到组件中渲染（会做必要格式校验；校验失败会 `console.error` + `alert`，并拒绝写入）
+
+```ts
+import { ref } from 'vue'
+import type { SuspendedBallChatInstance, ChatMessage } from 'ai-suspended-ball-chat'
+
+const chatRef = ref<SuspendedBallChatInstance>()
+
+const onGet = () => {
+  const list = chatRef.value?.getUiHistory() || []
+  console.log('uiHistory:', list)
+}
+
+const onReload = async () => {
+  const list = (await chatRef.value?.reloadUiHistory()) || []
+  console.log('uiHistory (reloaded):', list)
+}
+
+// 从后端拿到历史后注入
+const onSetFromServer = (serverList: ChatMessage[]) => {
+  const serverUiHistory: any[] = [
+    {
+      id: 1,
+      role: 'assistant',
+      content: '（模拟后端历史）你好，我是服务端下发的第一条消息',
+      timestamp: Date.now() - 60_000
+    },
+    {
+      id: 2,
+      role: 'user',
+      content: '（模拟后端历史）收到，我来继续对话',
+      timestamp: Date.now() - 55_000
+    },
+    {
+      id: 3,
+      role: 'assistant',
+      content: '（模拟后端历史）已注入成功，你可以继续发送新消息',
+      timestamp: Date.now() - 50_000
+    },
+  ]
+  chatRef.value?.setUiHistory(serverUiHistory)
+}
+```
+
+
 ### 否启用页面内容(文件内容)选择引用功能
 
 ```javascript
@@ -938,7 +1071,12 @@ const presetTasks = [
 // 示例：将AI回复插入到代码编辑器
 const callbacks = {
   clickAssistantMsgCallback: (message, index, messageObj) => {
-    console.log('AI回复消息:', message, index, messageObj);
+    console.log('插入内容:', { message, index, messageObj })
+    // 这里可以将消息内容插入到用户的编辑器或其他地方
+    console.log(`准备插入内容: ${message.substring(0, 100)}...`)
+    // 去掉思考过程和布局调用提示的内容
+    let filterContent = message.replace(/<details[\s\S]*?<\/details>/g, '').replace(/<div\s+data-tool[\s\S]*?<\/div>/g, '');
+    console.log(`准备插入内容(过滤版本): ${filterContent.substring(0, 100)}...`)
   }
 }
 ```
@@ -994,7 +1132,12 @@ const callbacks = {
   
   // 点击AI助理消息"插入含义"按钮时触发
   clickAssistantMsgCallback: (message, index, messageObj) => {
-    console.log('插入含义:', { message, index, messageObj })
+    console.log('插入内容:', { message, index, messageObj })
+    // 这里可以将消息内容插入到用户的编辑器或其他地方
+    console.log(`准备插入内容: ${message.substring(0, 100)}...`)
+    // 去掉思考过程和布局调用提示的内容
+    let filterContent = message.replace(/<details[\s\S]*?<\/details>/g, '').replace(/<div\s+data-tool[\s\S]*?<\/div>/g, '');
+    console.log(`准备插入内容(过滤版本): ${filterContent.substring(0, 100)}...`)
   },
   
   // 工单提交时触发
@@ -1437,9 +1580,9 @@ A: 目前语音输入默认使用中文简体（zh-CN）.
 
 A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:https://cdn.jsdelivr.net/npm/mermaid@11.10.1/dist/mermaid.min.js 或者 https://unpkg.com/mermaid@11.10.1/dist/mermaid.min.js
 
-### Q: 组件是否支持“深度思考模式”模式？
+### Q: 组件是否支持“深度思考模式”？
 
-A: beta版本已支持“**显性(有按钮UI)的深度思考模式**”,如需使用请下载beta版本.主版本中将不支持“**显性(有按钮UI)的深度思考模式**”模式,但是你仍然可以通过后端流式响应的“思考过程内容”通过包裹`<details><summary >思考过程</summary>思考的内容</details>`这种方式间接实现“深度思考模式”的功能,下面附上实现的关键代码.
+A: beta版本已支持“**显性(有按钮UI)的深度思考模式**”,如需使用请下载beta版本.主版本中将不支持“**显性(有按钮UI)的深度思考模式**”,但是你仍然可以通过后端流式响应的“思考过程内容”通过包裹`<details><summary >思考过程</summary>思考的内容</details>`这种方式间接实现“深度思考模式”的功能,下面附上实现的关键代码.
 
 ```js
 export function escapeHtml(input) {
@@ -1468,11 +1611,11 @@ export function wrapThinkingClose() {
 
 A: 是的,当前有三个版本: 正式版、beta版本、alpha版本。他们的差异如下:
 
-- **正式版**: 稳定版,功能最新且齐全,但此版本不支持“**显性(有按钮UI)的深度思考模式**”模式,但是你可以通过后端将“思考内容”用`<details><summary >`包裹间接实现这个功能.
+- **正式版**: 稳定版,功能最新且齐全,但此版本不支持“**显性(有按钮UI)的深度思考模式**”,但是你可以通过后端将“思考内容”用`<details><summary >`包裹间接实现这个功能.
   
-- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“**显性(有按钮UI)的深度思考模式**”模式,但是此版本不支持“渲染自定义组件”等功能。
+- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“**显性(有按钮UI)的深度思考模式**”,但是此版本不支持“渲染自定义组件”等功能。
   
-- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“**显性(有按钮UI)的深度思考模式**”模式, 可能存在一些未知Bug,谨慎使用.
+- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“**显性(有按钮UI)的深度思考模式**”, 可能存在一些未知Bug,谨慎使用.
 
 **总结: 根据您的需求选择需要的版本, 无特殊需求建议使用正式版。**
 
