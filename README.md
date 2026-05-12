@@ -29,25 +29,6 @@
 > **🔔 温馨提示:** 如果您觉得阅读文档困难,也可以选择咨询*在线AI助手*: [🤖点击直达咨询→](https://luckycola.com.cn/public/dist/aiAgent.html?openChat=1#/)
 ---
 
-## ✨ 特性
-
-- 🤖 **AI对话**: 支持与AI进行自然语言对话
-- 📡 **多模式请求**: 支持普通请求和流式(SSE)响应、WebSocket三种模式
-- 🖼️ **图片上传**: 支持图片上传和AI图像识别
-- 🎤 **语音输入**: 支持语音转文字输入，便捷的语音交互
-- 🔊 **语音播报**: 支持AI回复内容的语音播报
-- 📝 **获取AI消息**: 支持将AI内容插入到用户的编辑器或其他应用
-- 💾 **历史记录**: 本地存储对话历史，支持历史记录管理
-- 🎨 **主题切换**: 支持白天/夜间模式切换
-- 🔗 **引用内容**: 支持选择引用页面中(上传)的文本作为上下文
-- 📱 **自定义接口**: 支持用户自定义后端接口
-- 🔧 **高度可配置**: 丰富的配置选项和回调函数
-- 🚀 **TypeScript支持**: 完整的TypeScript类型定义
-- ☎️ **问题工单搜集**: 支持搜集需人工处理的问题
-- 📅 **渲染自定义组件**: 对话流中支持渲染自定义系列的组件(shoelace)
-- 📊 **ECharts 图表渲染**: 支持在 Markdown 中使用 echarts 代码块渲染图表
-
-
 ## 📦 安装
 
 ```bash
@@ -331,7 +312,6 @@ const assistantConfig = {
 |--------|------|--------|------|
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
 | `app-name` | `string` | `'ai-chat'` | 应用名称 |
-| `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
 | `custom-placeholder` | `string` | `'请输入你的问题...'` | 输入框的placeholder |
 | `show-task-running-box` | `boolean` | `false` | 是否显示任务执行中提示框 |
@@ -344,12 +324,16 @@ const assistantConfig = {
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
+| `domain-name` | `string` | `default` | 用户域,可以关联用户id实现用户维度的区分 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
 | `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
+| `enable-multi-image-upload` | `boolean` | `false` | 是否启用多图上传能力，开启后最多支持上传3张图片 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `false` | 是否启用语音输入 |
+| `enable-deep-thinking` | `boolean` | `false` | 是否显示深度思考模式开关；开启后用户可在输入区切换该模式，发送请求时会影响请求参数中的 `isThinkMode` 值 |
+| `custom-tools` | `ChatInputCustomTool[]` | `[]` | 输入区顶部自定义工具配置；支持通过数组渲染自定义工具按钮，可选激活态，并可通过 `clickCallback` 响应点击事件 |
 | `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
@@ -358,6 +342,7 @@ const assistantConfig = {
 | `show-clear-button` | `boolean` | `false` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
+| `enable-fullscreen-toggle` | `boolean` | `false` | 是否启用全屏切换功能（仅悬浮球模式下显示全屏切换按钮） |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -370,7 +355,6 @@ const assistantConfig = {
 |--------|------|--------|------|
 | `url` | `string` | `'/nlweb/query'` | API接口地址 |
 | `app-name` | `string` | `'ai-chat'` | 应用名称 |
-| `domain-name` | `string` | `'user'` | 用户域名 |
 | `disable-input` | `boolean` | `'false'` | 是否禁用输入框 |
 | `custom-placeholder` | `string` | `'请输入你的问题...'` | 自定义输入框的placeholder |
 | `show-task-running-box` | `boolean` | `false` | 是否显示任务执行中提示框 |
@@ -380,12 +364,16 @@ const assistantConfig = {
 | `enable-context` | `boolean` | `true` | 是否启用上下文记忆 |
 | `allow-history-search` | `boolean` | `false` | 是否启用记录搜索功能 |
 | `enable-local-storage` | `boolean` | `true` | 是否启用本地存储 |
+| `domain-name` | `string` | `default` | 用户域,可以关联用户id实现用户维度的区分 |
 | `storage-key` | `string` | `'ai-chat-history'` | 本地存储键名 |
 | `max-history-count` | `number` | `50` | 最大历史记录数量(非alpha版本中这个值建议设置不大于200避免影响性能;alpha版本为虚拟化版本不受限制) |
 | `context-history-count` | `number` | `10` | 作为上下文参与请求的历史消息条数（会自动向上取偶数；仅在 `enable-context=true` 时生效） |
 | `enable-image-upload` | `boolean` | `false` | 是否启用图片上传 |
+| `enable-multi-image-upload` | `boolean` | `false` | 是否启用多图上传能力，开启后最多支持上传3张图片 |
 | `supported-custom-context` | `boolean` | `false` | 否启用页面内容(文件内容)选择引用功能 |
 | `enable-voice-input` | `boolean` | `false` | 是否启用语音输入 |
+| `enable-deep-thinking` | `boolean` | `false` | 是否显示深度思考模式开关；开启后用户可在输入区切换该模式，发送请求时会影响请求参数中的 `isThinkMode` 值 |
+| `custom-tools` | `ChatInputCustomTool[]` | `[]` | 输入区顶部自定义工具配置；支持通过数组渲染自定义工具按钮，可选激活态，并可通过 `clickCallback` 响应点击事件 |
 | `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
@@ -939,6 +927,40 @@ mockDataArr.forEach((data, index) => {
 
 ## 🔧 高级配置
 
+### 悬浮球全屏模式配置
+
+悬浮球模式支持通过配置开启“全屏”按钮。开启后，在桌面端打开悬浮聊天面板时，头部会出现全屏切换按钮；点击后会进入全屏覆盖层模式，使用白色页面覆盖底层内容，并以固定宽度内容区居中展示。
+
+> 注意：
+> - 该功能默认关闭
+> - 仅 `SuspendedBallChat` 组件支持该入口，`ChatPanel` 独立模式不会显示该按钮
+> - 移动端/小屏幕（宽度 `<= 768px`）不显示该按钮
+> - 当 AI 正在流式回复时，该按钮会自动禁用，避免切换布局影响交互
+
+```vue
+<template>
+  <SuspendedBallChat
+    :url="apiUrl"
+    :app-name="appName"
+    :domain-name="domainName"
+    :enable-streaming="true"
+    :enable-fullscreen-toggle="true"
+  />
+</template>
+```
+
+#### 配置项
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enableFullscreenToggle` | `boolean` | `false` | 是否开启悬浮球聊天面板的全屏切换按钮 |
+
+#### 行为说明
+
+- 打开悬浮球聊天面板后，若配置开启且当前不是小屏设备，则头部显示全屏按钮
+- 点击后进入全屏覆盖层模式，聊天区域会在页面中居中展示
+- 退出全屏后恢复悬浮球面板布局
+
 ### 自定义请求配置
 
 ```javascript
@@ -1019,6 +1041,58 @@ const onSetFromServer = (serverList: ChatMessage[]) => {
   :supported-custom-context="true"
 />
 ```
+
+### 自定义工具 custom-tools 配置示例
+
+适用于在输入区顶部扩展业务工具按钮，例如“联网搜索”“插入模板”“生成周报”等。支持普通点击按钮和可激活按钮两种模式。
+
+```vue
+<template>
+  <SuspendedBallChat
+    :custom-tools="customTools"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const chatRef = ref()
+
+const customTools = [
+  {
+    id: 'tool-network-search',
+    toolName: '联网搜索',
+    icon: 'https://example.com/icons/network-search.png',
+    enableActive: true,
+    clickCallback: ({ id, toolName, icon, active, enableActive }) => {
+      console.log('自定义工具点击:', { id, toolName, icon, active, enableActive })
+      chatRef.value?.sendMessage('请使用联网搜索能力，帮我检索并总结今天 AI 领域的 3 条重要资讯。')
+    }
+  },
+  {
+    id: 'tool-meeting-template',
+    toolName: '会议模板',
+    icon: 'https://example.com/icons/template.png',
+    enableActive: false,
+    clickCallback: ({ id, toolName, icon, active, enableActive }) => {
+      console.log('自定义工具点击:', { id, toolName, icon, active, enableActive })
+      chatRef.value?.sendMessage('请帮我生成一个会议纪要模板，包含会议主题、参会人、待办事项和风险项。')
+    }
+  }
+]
+</script>
+```
+
+**字段说明：**
+- `id`：工具唯一标识
+- `toolName`：按钮文案
+- `icon`：可选，按钮图标 URL
+- `enableActive`：是否支持激活态；为 `true` 时点击会切换激活/非激活样式
+- `clickCallback`：点击回调，可在这里执行发送消息、切换业务状态等操作
+
+**建议：**
+- 需要“模式开关类”能力时，使用 `enableActive: true`
+- 需要“快捷指令类”能力时，使用 `enableActive: false`
 
 ### AI助手配置
 
@@ -1582,7 +1656,7 @@ A: 如果需要支持解析mermaid语法请提前在你的项目中引入资源:
 
 ### Q: 组件是否支持“深度思考模式”？
 
-A: beta版本已支持“**显性(有按钮UI)的深度思考模式**”,如需使用请下载beta版本.主版本中将不支持“**显性(有按钮UI)的深度思考模式**”,但是你仍然可以通过后端流式响应的“思考过程内容”通过包裹`<details><summary >思考过程</summary>思考的内容</details>`这种方式间接实现“深度思考模式”的功能,下面附上实现的关键代码.
+A: beta版本已支持“**独立协议的深度思考模式**”,如需使用请下载beta版本.主版本中将不支持“**独立协议的深度思考模式**”,但是你仍然可以通过后端流式响应的“思考过程内容”通过包裹`<details><summary >思考过程</summary>思考的内容</details>`这种方式间接实现“深度思考模式”的功能,下面附上实现的关键代码.
 
 ```js
 export function escapeHtml(input) {
@@ -1611,11 +1685,11 @@ export function wrapThinkingClose() {
 
 A: 是的,当前有三个版本: 正式版、beta版本、alpha版本。他们的差异如下:
 
-- **正式版**: 稳定版,功能最新且齐全,但此版本不支持“**显性(有按钮UI)的深度思考模式**”,但是你可以通过后端将“思考内容”用`<details><summary >`包裹间接实现这个功能.
+- **正式版**: 稳定版,功能最新且齐全,但此版本不支持“**独立协议的深度思考模式**”,但是你可以通过后端将“思考内容”用`<details><summary >`包裹间接实现这个功能.
   
-- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“**显性(有按钮UI)的深度思考模式**”,但是此版本不支持“渲染自定义组件”等功能。
+- **beta版本**: 这是一个差异版本,对齐正式版90%的功能,支持“**独立协议的深度思考模式**”,但是此版本不支持“渲染自定义组件”等功能。
   
-- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“**显性(有按钮UI)的深度思考模式**”, 可能存在一些未知Bug,谨慎使用.
+- **alpha版本**: 这是一个实验版本, 对齐正式版100%的功能, 唯一的差异是此版本已经将“对话列表虚拟化”了以提升性能,此版本和主版本一样不支持“**独立协议的深度思考模式**”, 可能存在一些未知Bug,谨慎使用.
 
 **总结: 根据您的需求选择需要的版本, 无特殊需求建议使用正式版。**
 
@@ -1767,3 +1841,5 @@ onMounted(async () => {
 
  3、组件npm地址:
  https://www.npmjs.com/package/ai-suspended-ball-chat
+
+ 4、组件CDN资源地址: https://unpkg.com/ai-suspended-ball-chat@latest/dist/suspended-ball-chat.umd.js
