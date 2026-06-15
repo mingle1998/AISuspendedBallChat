@@ -308,6 +308,94 @@ const assistantConfig = {
 - 如果不提供 `assistant-config.avatar`，将使用默认的SVG图标
 - 自定义头像会自动适应头像容器的大小和样式
 
+### 自定义"更多"抽屉
+
+启用 `show-more-button` 后，点击头部"更多"按钮会从右侧滑出抽屉，内容通过 `#more` 插槽自定义：
+
+```vue
+<template>
+  <SuspendedBallChat
+    :show-more-button="true"
+    more-drawer-title="更多"
+  >
+    <template #more="{ close }">
+      <div style="padding: 20px;">
+        <p>这里放你的自定义内容</p>
+        <button @click="close">关闭</button>
+      </div>
+    </template>
+  </SuspendedBallChat>
+</template>
+```
+
+`ChatPanel` 组件用法相同。插槽参数 `{ close }` 可用于关闭抽屉。
+
+### 自定义聊天内容区插槽
+
+`ChatPanel、SuspendedBallChat` 还支持在聊天内容区上下方注入自定义内容，适合补充公告、说明、快捷操作等能力。
+
+```vue
+<template>
+  <ChatPanel :url="apiUrl" :app-name="appName" :domain-name="domainName">
+    <template #chat-box-head="{ uiHistory, showWelcomeScreen, isStreaming }">
+      <div>
+        <p>顶部插槽示例</p>
+        <span>消息数：{{ uiHistory.length }}</span>
+      </div>
+    </template>
+
+    <template #chat-box-footer="{ uiHistory, showWelcomeScreen, isStreaming }">
+      <div>
+        <span>底部插槽示例：当前共 {{ uiHistory.length }} 条消息</span>
+      </div>
+    </template>
+  </ChatPanel>
+</template>
+```
+
+这两个插槽当前对外暴露的上下文为：
+
+- `uiHistory`：当前 UI 历史消息列表
+- `showWelcomeScreen`：是否正在显示欢迎页
+- `isStreaming`：是否正在流式输出
+
+### 自定义欢迎区插槽
+
+`ChatPanel、SuspendedBallChat` 还支持通过 `#welcome` 自定义欢迎区内容。一旦传入该插槽，就会覆盖默认欢迎内容，不再渲染组件内置的头像、标题、描述和默认任务布局。
+
+```vue
+<template>
+  <ChatPanel
+    :url="apiUrl"
+    :app-name="appName"
+    :domain-name="domainName"
+    :welcome-config="welcomeConfig"
+    :preset-tasks="presetTasks"
+  >
+    <template #welcome="{ title, welcomeConfig, presetTasks, onTaskClick }">
+      <div>
+        <h2>{{ welcomeConfig?.title || title }}</h2>
+        <p>{{ welcomeConfig?.description }}</p>
+
+        <button
+          v-for="task in presetTasks"
+          :key="task.id"
+          @click="onTaskClick(task)"
+        >
+          {{ task.title }}
+        </button>
+      </div>
+    </template>
+  </ChatPanel>
+</template>
+```
+
+该插槽当前对外暴露的上下文为：
+
+- `welcomeConfig`：欢迎区配置对象
+- `presetTasks`：预设任务列表
+- `onTaskClick`：触发预设任务点击的函数
+
 ## 📋 API 参考
 
 ### SuspendedBallChat Props
@@ -339,6 +427,7 @@ const assistantConfig = {
 | `enable-deep-thinking` | `boolean` | `false` | 是否显示深度思考模式开关；开启后用户可在输入区切换该模式，发送请求时会影响请求参数中的 `isThinkMode` 值 |
 | `custom-tools` | `ChatInputCustomTool[]` | `[]` | 输入区顶部自定义工具配置；支持通过数组渲染自定义工具按钮，可选激活态，并可通过 `clickCallback` 响应点击事件 |
 | `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
+| `align-user-messages-right` | `boolean` | `false` | 是否将用户消息布局到右侧，开启后更接近传统聊天界面布局 |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
@@ -346,6 +435,8 @@ const assistantConfig = {
 | `show-clear-button` | `boolean` | `false` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
+| `show-more-button` | `boolean` | `false` | 是否显示"更多"按钮，点击后从右侧滑出抽屉面板 |
+| `more-drawer-title` | `string` | `'更多'` | "更多"抽屉面板的标题 |
 | `enable-fullscreen-toggle` | `boolean` | `false` | 是否启用全屏切换功能（仅悬浮球模式下显示全屏切换按钮） |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
@@ -379,6 +470,7 @@ const assistantConfig = {
 | `enable-deep-thinking` | `boolean` | `false` | 是否显示深度思考模式开关；开启后用户可在输入区切换该模式，发送请求时会影响请求参数中的 `isThinkMode` 值 |
 | `custom-tools` | `ChatInputCustomTool[]` | `[]` | 输入区顶部自定义工具配置；支持通过数组渲染自定义工具按钮，可选激活态，并可通过 `clickCallback` 响应点击事件 |
 | `show-avatar` | `boolean` | `true` | 是否显示聊天头像（移动端小屏幕会强制隐藏） |
+| `align-user-messages-right` | `boolean` | `false` | 是否将用户消息布局到右侧，开启后更接近传统聊天界面布局 |
 | `enable-auto-speech` | `boolean` | `false` | 是否启用AI助理完成输出后自动语音播报 |
 | `title` | `string` | `'AI助手'` | 聊天面板标题 |
 | `show-header` | `boolean` | `true` | 是否显示头部 |
@@ -386,6 +478,8 @@ const assistantConfig = {
 | `show-clear-button` | `boolean` | `false` | 是否显示清除按钮 |
 | `show-theme-toggle` | `boolean` | `false` | 是否显示白天/夜间模式切换按钮 |
 | `show-feedback-button` | `boolean` | `false` | 是否显示工单提交按钮 |
+| `show-more-button` | `boolean` | `false` | 是否显示"更多"按钮，点击后从右侧滑出抽屉面板 |
+| `more-drawer-title` | `string` | `'更多'` | "更多"抽屉面板的标题 |
 | `welcome-config` | `WelcomeConfig` | - | 欢迎界面配置 |
 | `preset-tasks` | `PresetTask[]` | - | 预设任务列表 |
 | `assistant-config` | `AssistantConfig` | - | AI助手配置 |
@@ -1847,3 +1941,4 @@ onMounted(async () => {
  https://www.npmjs.com/package/ai-suspended-ball-chat
 
  4、组件CDN资源地址: https://unpkg.com/ai-suspended-ball-chat@latest/dist/suspended-ball-chat.umd.js
+
