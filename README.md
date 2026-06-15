@@ -4,6 +4,16 @@
 
 **⚠️使用场景注意**: <u>当前是Vue3专用组件版本,如果您的业务是其他技术栈(例如React、Vue2、原生应用等),请使用 [ai-chat-embed 版本→](https://www.npmjs.com/package/ai-chat-embed)。</u>
 
+![Snipaste_2025-08-31_19-48-18.png](./aiChat.gif)
+
+**《组件落地场景体验1-AI简历助手》**: [点击直达案例1🔗](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
+
+**《组件落地场景体验2-AI编程助手》**: [点击直达案例2🔗](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=123456789#/editor)
+
+> **🔔 温馨提示:** 如果您觉得阅读文档困难,也可以选择咨询*在线AI助手*: [🤖点击直达咨询→](https://luckycola.com.cn/public/dist/aiAgent.html?openChat=1#/)
+---
+
+
 ## ✨ 特性
 
 - 🤖 **AI对话**: 支持与AI进行自然语言对话
@@ -22,15 +32,6 @@
 - 📅 **渲染自定义组件**: 对话流中支持渲染自定义系列的组件(shoelace)
 - 📊 **ECharts 图表渲染**: 支持在 Markdown 中使用 echarts 代码块渲染图表
 - 🎛️ **更多抽屉**: 支持自定义"更多"抽屉面板，可通过插槽渲染自定义内容
-
-![Snipaste_2025-08-31_19-48-18.png](./aiChat.gif)
-
-**《组件落地场景体验1-AI简历助手》**: [点击直达案例1🔗](https://luckycola.com.cn/public/resume/?t=123456789#/resume)
-
-**《组件落地场景体验2-AI编程助手》**: [点击直达案例2🔗](https://luckycola.com.cn/public/dist/onlineCodeEditor.html?t=123456789#/editor)
-
-> **🔔 温馨提示:** 如果您觉得阅读文档困难,也可以选择咨询*在线AI助手*: [🤖点击直达咨询→](https://luckycola.com.cn/public/dist/aiAgent.html?openChat=1#/)
----
 
 ## 📦 安装
 
